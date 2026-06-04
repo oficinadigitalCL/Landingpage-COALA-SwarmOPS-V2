@@ -1,0 +1,10 @@
+export { HeroSection } from './HeroSection';
+export { ProblemSection } from './ProblemSection';
+export { SolutionSection } from './SolutionSection';
+export { HowItWorksSection } from './HowItWorksSection';
+export { ModesShowcaseSection } from './ModesShowcaseSection';
+export { WhoIsItForSection } from './WhoIsItForSection';
+export { PricingSection } from './PricingSection';
+export { CommunitySection } from './CommunitySection';
+export { SwarmDemoSection } from './SwarmDemoSection';
+export { HeroThreeBackground } from './HeroThreeBackground';
