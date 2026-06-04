@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn } from '../../lib/utils';
 import { MobileMenu } from './MobileMenu';
 
@@ -72,11 +73,13 @@ function Navbar() {
                   {link.text}
                 </a>
               ))}
+              <LanguageSwitcher />
               <ThemeToggle />
             </div>
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-4 md:hidden">
+              <LanguageSwitcher />
               <ThemeToggle />
               <button
                 onClick={() => setIsMobileOpen(!isMobileOpen)}

@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { LanguageProvider } from './hooks/useLanguage';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 
@@ -45,36 +46,38 @@ function SectionFallback() {
 // Wire all sections in correct order
 function App() {
   return (
-    <div className="bg-coala-darker text-white min-h-screen">
-      <Navbar />
-      <main>
-        <Suspense fallback={<SectionFallback />}>
-          <HeroSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <ProblemSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <SolutionSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <HowItWorksSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <ModesShowcaseSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <WhoIsItForSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <PricingSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <CommunitySection />
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
+    <LanguageProvider>
+      <div className="bg-coala-darker text-white min-h-screen">
+        <Navbar />
+        <main>
+          <Suspense fallback={<SectionFallback />}>
+            <HeroSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <ProblemSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <SolutionSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <HowItWorksSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <ModesShowcaseSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <WhoIsItForSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <PricingSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <CommunitySection />
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
+    </LanguageProvider>
   );
 }
 

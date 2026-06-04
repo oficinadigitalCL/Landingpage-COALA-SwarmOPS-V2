@@ -12,13 +12,13 @@
   "hero": {
     "id": "hero",
     "title": "COALA-SwarmOPS",
-    "subtitle": "AI Agent Swarm",
-    "description": "Orchestrate your own AI agent swarm. Save money on agents, scale your projects, and keep full control with our battle-tested configuration.",
+    "subtitle": "AI Agent Ecosystem",
+    "description": "Orchestrate your own AI agent ecosystem. Save money on agents, scale your projects, and keep full control with our battle-tested configuration.",
     "tagline": "Stop paying for individual agents. Coordinate them all.",
     "ctas": [
       { "text": "Sponsor on GitHub", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "primary", "icon": "Heart" },
-      { "text": "Install Now", "href": "#how-it-works", "variant": "secondary", "icon": "Download" },
-      { "text": "Docs", "href": "#modes", "variant": "outline", "icon": "BookOpen" }
+      { "text": "Install Now", "href": "https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/INSTALL.md", "variant": "secondary", "icon": "Download" },
+      { "text": "Docs", "href": "https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/README_ES.md", "variant": "outline", "icon": "BookOpen" }
     ]
   },
   "problem": {
@@ -34,9 +34,9 @@
   },
   "solution": {
     "id": "solution",
-    "title": "A swarm that works for you",
+    "title": "An ecosystem that works for you",
     "subtitle": "Intelligent multi-agent coordination",
-    "description": "COALA-SwarmOPS coordinates multiple specialized agents like a swarm. Each agent does what it does best, automatically sharing context. You just request the feature — the swarm executes it.",
+    "description": "COALA-SwarmOPS coordinates multiple specialized agents like an ecosystem. Each agent does what it does best, automatically sharing context. You just request the feature — the ecosystem executes it.",
     "features": [
       { "icon": "GitBranch", "title": "v6.0 — Custom Modes", "description": "19 specialized modes across T0 to T3 tiers. Each mode is an expert agent in its domain." },
       { "icon": "Shield", "title": "v6.5 — Circuit Breakers", "description": "Cascading failure protection. If an agent fails 2 times, it's automatically isolated." },
@@ -48,32 +48,32 @@
   },
   "howItWorks": {
     "id": "how-it-works",
-    "title": "How the swarm works",
+    "title": "How the ecosystem works",
     "subtitle": "3 steps to tame complexity",
-    "description": "Install in 5 minutes. Our custom configuration comes pre-built with 19 battle-tested modes. You only need your API key and a project folder.",
+    "description": "Install in 5 minutes. Our custom configuration comes pre-built with 19 battle-tested modes. You only need your API key and a project folder. [Installation guide →](https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/INSTALL.md)",
     "steps": [
       { "number": 1, "title": "Install", "description": "Clone the repo, set up your API key. 5 minutes and you're ready.", "icon": "Download" },
       { "number": 2, "title": "Describe your feature", "description": "Write what you need in natural language. The swarm understands the context.", "icon": "FileText" },
-      { "number": 3, "title": "The swarm executes", "description": "Agents coordinate on their own. You only review the final result.", "icon": "Rocket" }
+      { "number": 3, "title": "The ecosystem executes", "description": "Agents coordinate on their own. You only review the final result.", "icon": "Rocket" }
     ],
     "ctas": [
-      { "text": "Get Started Now", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2", "variant": "primary", "icon": "ArrowRight" }
+      { "text": "Get Started Now", "href": "https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/INSTALL.md", "variant": "primary", "icon": "ArrowRight" }
     ]
   },
   "modesShowcase": {
     "id": "modes",
-    "title": "19 modes. One swarm.",
+    "title": "19 modes. One ecosystem.",
     "subtitle": "Each agent is a specialist in its task",
     "description": "From simple T0 execution to T3 strategic planning. Every mode is optimized for its specific task, with the right model at the right cost.",
     "ctas": [
-      { "text": "Explore All Modes", "href": "#", "variant": "primary", "icon": "Grid3X3" }
+      { "text": "Explore All Modes", "href": "https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/README_ES.md", "variant": "primary", "icon": "Grid3X3" }
     ]
   },
   "whoIsItFor": {
     "id": "who-is-it-for",
     "title": "Who is COALA-SwarmOPS for?",
     "subtitle": "From beginner to enterprise",
-    "description": "Whether you're just starting out or running a company, we have a configuration that fits your level.",
+    "description": "Whether you're just starting out or running a company, we have a configuration that fits your level. [Explore the full README →](https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/README_ES.md)",
     "columns": [
       {
         "icon": "Code2",
@@ -90,7 +90,7 @@
       {
         "icon": "Building2",
         "title": "Enterprises",
-        "description": "Scale your development with a coordinated swarm that respects your budget.",
+        "description": "Scale your development with a coordinated ecosystem that respects your budget.",
         "bullets": ["Circuit breakers anti-failure", "Local and cloud models", "Security auditing", "Full traceability"]
       }
     ]
@@ -99,12 +99,12 @@
     "id": "pricing",
     "title": "Free. Open Source. Forever.",
     "subtitle": "Only pay for the tokens you consume",
-    "description": "COALA-SwarmOPS is 100% open source. You only pay for the models you choose to use (API tokens). If you use local models like Qwen or Granite, the cost is ZERO.",
+    "description": "COALA-SwarmOPS is 100% open source. You only pay for the models you choose to use (API tokens). If you use local models like Granite, the cost is ZERO.",
     "tiers": [
       {
         "name": "Local Models",
         "price": "$0",
-        "description": "Run Qwen and Granite on your own machine without paying a cent.",
+        "description": "Run Granite and free models on your own machine without paying a cent.",
         "features": ["Local execution (T0)", "12GB VRAM recommended", "Unlimited requests", "100% private"],
         "cta": { "text": "Get Started Free", "href": "#how-it-works", "variant": "primary" },
         "highlighted": false
@@ -124,12 +124,12 @@
   },
   "community": {
     "id": "community",
-    "title": "Join the swarm",
+    "title": "Join the ecosystem",
     "subtitle": "Open source community",
     "description": "COALA-SwarmOPS is a living project. Contribute, report bugs, suggest features. We build this together.",
     "ctas": [
-      { "text": "GitHub (v2)", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2", "variant": "primary", "icon": "Github" },
-      { "text": "GitHub (v1)", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS", "variant": "outline", "icon": "Github" }
+      { "text": "COALA SwarmOPS v2", "href": "https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS-V2/", "variant": "primary", "icon": "Github" },
+      { "text": "COALA SwarmOPS v1", "href": "https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS/#", "variant": "outline", "icon": "Github" }
     ]
   },
   "footer": {

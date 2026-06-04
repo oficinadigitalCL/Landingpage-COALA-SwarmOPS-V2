@@ -5,3 +5,5 @@ export { useScrollAnimation } from './useScrollAnimation';
 export { useTypingEffect } from './useTypingEffect';
 export { useParticleSwarm } from './useParticleSwarm';
 export { useParallax } from './useParallax';
+export { useLanguage, LanguageProvider } from './useLanguage';
+export type { Language } from './useLanguage';

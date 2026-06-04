@@ -22,7 +22,7 @@ function ModesShowcaseSection() {
     <section
       id="modes"
       className="relative py-24 sm:py-32 bg-coala-dark"
-      aria-label="Modos del enjambre"
+      aria-label="Modos del ecosistema"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionReveal>
@@ -79,7 +79,9 @@ function ModesShowcaseSection() {
         <SectionReveal delay={0.4}>
           <div className="text-center mt-12">
             <a
-              href="#pricing"
+              href="https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/README_ES.md"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-coala-cyan text-coala-cyan font-semibold hover:bg-coala-cyan/10 transition-all duration-300"
             >
               Explorar Todos los Modos ({modes.length})

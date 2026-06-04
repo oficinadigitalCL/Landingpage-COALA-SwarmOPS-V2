@@ -2,9 +2,9 @@ import type { Mode } from '../types/mode';
 
 export const modes: Mode[] = [
   {
-    id: 'qwen-coder-executor',
-    name: 'Qwen Coder Executor',
-    slug: 'qwen-coder-executor',
+    id: 'granite-coder-executor',
+    name: 'Granite Coder Executor',
+    slug: 'granite-coder-executor',
     tier: 'T0',
     category: 'executor',
     description:
@@ -12,22 +12,22 @@ export const modes: Mode[] = [
     capabilities: [
       { name: 'Ejecución atómica', description: 'Recibe una fórmula simple y la traduce a 1 comando cmd.exe' },
       { name: 'Escalación automática', description: 'Si falla, escala automáticamente a T0.5 Flash Fast Coder' },
-      { name: 'Costo cero', description: 'Ejecución local con qwen2.5 (12GB VRAM), sin costo de API' },
+      { name: 'Costo cero', description: 'Ejecución local con granite3.2 (5GB VRAM), sin costo de API' },
       { name: 'Sin estado', description: 'No mantiene contexto entre ejecuciones, ideal para tareas aisladas' },
     ],
     icon: 'Terminal',
     costPerMTok: 0,
-    model: 'qwen2.5:latest (12GB VRAM)',
+    model: 'granite3.2:8b (5GB VRAM)',
     emoji: '⚡',
   },
   {
-    id: 'qwen-fast-checker',
-    name: 'Qwen Fast Checker',
-    slug: 'qwen-fast-checker',
+    id: 'granite-fast-checker',
+    name: 'Granite Fast Checker',
+    slug: 'granite-fast-checker',
     tier: 'T0',
     category: 'checker',
     description:
-      'Valida sintaxis y linting básico de archivos.TypeScript y Python. Corre tareas atómicas de verificación sin消耗 de API.',
+      'Valida sintaxis y linting básico de archivos TypeScript y Python. Corre tareas atómicas de verificación sin costo de API.',
     capabilities: [
       { name: 'Validación sintáctica', description: 'Verifica sintaxis de archivos .ts y .py' },
       { name: 'Linting básico', description: 'Ejecuta reglas de linting predefinidas sin configuración adicional' },
@@ -35,7 +35,7 @@ export const modes: Mode[] = [
     ],
     icon: 'SearchCheck',
     costPerMTok: 0,
-    model: 'qwen3.5:9b-opt (6GB VRAM)',
+    model: 'granite3.2:8b (5GB VRAM)',
     emoji: '🔎',
   },
   {

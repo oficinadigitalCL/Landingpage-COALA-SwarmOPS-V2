@@ -12,7 +12,7 @@ const HeroThreeBackground = lazy(() =>
 import { cn } from '../../lib/utils';
 
 const TAGLINES = [
-  'Orquesta tu enjambre de agentes IA',
+  'Orquesta tu ecosistema de agentes IA',
   'Ahorra plata en AI agents',
   'Instala en 5 minutos',
   'Configuración battle-tested',
@@ -95,7 +95,7 @@ function HeroSection() {
 
           <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-12">
             Deja de pagar por agentes individuales. Coordínalos todos con nuestra configuración
-            battle-tested. 19 modos especializados que trabajan en enjambre.
+            battle-tested. 19 modos especializados que trabajan en ecosistema.
           </p>
 
           {/* CTA buttons as styled anchor tags */}
@@ -110,8 +110,10 @@ function HeroSection() {
               Sponsor en GitHub
             </a>
             <a
-              href="#how-it-works"
+              href="https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/INSTALL.md"
               className={cn(linkStyles, variants.secondary)}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Download size={20} />
               Instalar Ahora

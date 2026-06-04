@@ -7,6 +7,8 @@ const communityContent = content.community;
 
 const REPO_V1 = 'oficinadigitalCL/Landingpage-COALA-SwarmOPS';
 const REPO_V2 = 'oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2';
+const URL_V1 = 'https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS/#';
+const URL_V2 = 'https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS-V2/';
 
 function CommunitySection() {
   return (
@@ -47,7 +49,7 @@ function CommunitySection() {
                 </div>
               </div>
               <a
-                href={`https://github.com/${REPO_V2}`}
+                href={URL_V2}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-coala-cyan text-black font-semibold hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-all duration-300"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -78,7 +80,7 @@ function CommunitySection() {
                 </div>
               </div>
               <a
-                href={`https://github.com/${REPO_V1}`}
+                href={URL_V1}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-coala-purple text-coala-purple font-semibold hover:bg-coala-purple/10 transition-all duration-300"
                 target="_blank"
                 rel="noopener noreferrer"

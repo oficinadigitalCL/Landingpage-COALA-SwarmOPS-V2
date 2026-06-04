@@ -1,0 +1,143 @@
+{
+  "navbar": {
+    "logo": "COALA SwarmOPS",
+    "links": [
+      { "text": "首页", "href": "#hero" },
+      { "text": "运作方式", "href": "#how-it-works" },
+      { "text": "模式", "href": "#modes" },
+      { "text": "价格", "href": "#pricing" },
+      { "text": "社区", "href": "#community" }
+    ]
+  },
+  "hero": {
+    "id": "hero",
+    "title": "COALA-SwarmOPS",
+    "subtitle": "AI 智能体生态系统",
+    "description": "编排你自己的 AI 智能体生态系统。省钱、扩展项目、保持完全控制，使用我们经过实战测试的配置。",
+    "tagline": "停止为单个智能体付费。统筹所有。",
+    "ctas": [
+      { "text": "GitHub 赞助", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "primary", "icon": "Heart" },
+      { "text": "立即安装", "href": "https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/INSTALL.md", "variant": "secondary", "icon": "Download" },
+      { "text": "文档", "href": "https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/README_ES.md", "variant": "outline", "icon": "BookOpen" }
+    ]
+  },
+  "problem": {
+    "id": "problem",
+    "title": "厌倦了静态 AI 智能体？",
+    "subtitle": "传统开发的问题",
+    "description": "传统工作流让你一次只能选择一个智能体。切换上下文花费金钱、时间和精力。使用静态工具，每个任务都需要新的提示、新的上下文、新的成本。",
+    "features": [
+      { "icon": "Zap", "title": "没有协调", "description": "智能体孤立工作，从不共享上下文或结果。" },
+      { "icon": "DollarSign", "title": "隐藏成本", "description": "每次切换智能体意味着从头重建上下文。" },
+      { "icon": "Clock", "title": "时间流失", "description": "手动切换工具会打断你的开发流程。" }
+    ]
+  },
+  "solution": {
+    "id": "solution",
+    "title": "为你工作的生态系统",
+    "subtitle": "智能多智能体协调",
+    "description": "COALA-SwarmOPS 像一个生态系统一样协调多个专业智能体。每个智能体做自己最擅长的事情，自动共享上下文。你只需要提出需求 — 蜂群执行。",
+    "features": [
+      { "icon": "GitBranch", "title": "v6.0 — 自定义模式", "description": "19 种专业模式，覆盖 T0 到 T3 层级。每种模式都是领域专家智能体。" },
+      { "icon": "Shield", "title": "v6.5 — 熔断器", "description": "级联故障保护。如果智能体失败 2 次，自动隔离。" },
+      { "icon": "Network", "title": "v6.7 — CoALA 蜂群", "description": "完整决策循环：提议 → 评估 → 选择 → 执行，带工作记忆。" }
+    ],
+    "ctas": [
+      { "text": "查看可用模式", "href": "#modes", "variant": "primary", "icon": "Grid3X3" }
+    ]
+  },
+  "howItWorks": {
+    "id": "how-it-works",
+    "title": "生态系统如何运作",
+    "subtitle": "三步驯服复杂性",
+    "description": "5 分钟安装。我们的自定义配置预装了 19 种经过实战测试的模式。你只需要 API 密钥和项目文件夹。[安装指南 →](https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/INSTALL.md)",
+    "steps": [
+      { "number": 1, "title": "安装", "description": "克隆仓库，配置 API 密钥。5 分钟即可就绪。", "icon": "Download" },
+      { "number": 2, "title": "描述你的功能", "description": "用自然语言写下你的需求。蜂群理解上下文。", "icon": "FileText" },
+      { "number": 3, "title": "生态系统执行", "description": "智能体自主协调。你只需审核最终结果。", "icon": "Rocket" }
+    ],
+    "ctas": [
+      { "text": "立即开始", "href": "https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/INSTALL.md", "variant": "primary", "icon": "ArrowRight" }
+    ]
+  },
+  "modesShowcase": {
+    "id": "modes",
+    "title": "19 种模式。一个生态系统。",
+    "subtitle": "每个智能体都是其任务专家",
+    "description": "从简单的 T0 执行到 T3 战略规划。每种模式都针对其特定任务优化，配备正确的模型和合理的成本。",
+    "ctas": [
+      { "text": "探索所有模式", "href": "https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/README_ES.md", "variant": "primary", "icon": "Grid3X3" }
+    ]
+  },
+  "whoIsItFor": {
+    "id": "who-is-it-for",
+    "title": "COALA-SwarmOPS 适合谁？",
+    "subtitle": "从初学者到企业",
+    "description": "无论你是刚开始还是运营公司，我们都有适合你水平的配置。[探索完整 README →](https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/README_ES.md)",
+    "columns": [
+      {
+        "icon": "Code2",
+        "title": "开发者",
+        "description": "适合想要倍增产出而无需切换工具的开发者。",
+        "bullets": ["VS Code 集成", "19 种专业模式", "重复任务自动化", "自动代码审查"]
+      },
+      {
+        "icon": "GraduationCap",
+        "title": "初学者",
+        "description": "刚开始使用 AI 智能体？我们的配置是即插即用的。",
+        "bullets": ["5 分钟安装", "中文文档", "预配置模式", "活跃社区"]
+      },
+      {
+        "icon": "Building2",
+        "title": "企业",
+        "description": "用协调的生态系统扩展你的开发，同时尊重预算。",
+        "bullets": ["防故障熔断器", "本地和云端模型", "安全审计", "完整可追溯性"]
+      }
+    ]
+  },
+  "pricing": {
+    "id": "pricing",
+    "title": "免费。开源。永久。",
+    "subtitle": "只需支付你消耗的 tokens",
+    "description": "COALA-SwarmOPS 是 100% 开源的。你只需为选择使用的模型付费（API tokens）。如果使用本地模型如 Granite，成本为零。",
+    "tiers": [
+      {
+        "name": "本地模型",
+        "price": "$0",
+        "description": "在你自己的机器上运行 Granite 和免费模型，无需付费。",
+        "features": ["本地执行 (T0)", "推荐 12GB VRAM", "无限请求", "100% 隐私"],
+        "cta": { "text": "免费开始", "href": "#how-it-works", "variant": "primary" },
+        "highlighted": false
+      },
+      {
+        "name": "云端模型 (T0.5–T3)",
+        "price": "从 $0.14",
+        "description": "在需要高级推理时扩展到更强大的模型。",
+        "features": ["DeepSeek Flash ($0.14)", "DeepSeek Pro", "Kimi K2.5/K2.6", "按实际使用付费"],
+        "cta": { "text": "GitHub 赞助", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "secondary", "icon": "Heart" },
+        "highlighted": true
+      }
+    ],
+    "ctas": [
+      { "text": "成为赞助者", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "primary", "icon": "Heart" }
+    ]
+  },
+  "community": {
+    "id": "community",
+    "title": "加入生态系统",
+    "subtitle": "开源社区",
+    "description": "COALA-SwarmOPS 是一个活跃的项目。贡献、报告 bug、建议功能。我们一起构建。",
+    "ctas": [
+      { "text": "COALA SwarmOPS v2", "href": "https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS-V2/", "variant": "primary", "icon": "Github" },
+      { "text": "COALA SwarmOPS v1", "href": "https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS/#", "variant": "outline", "icon": "Github" }
+    ]
+  },
+  "footer": {
+    "copyright": "© 2026 COALA-SwarmOPS — Oficina Digital CL。保留所有权利。",
+    "links": [
+      { "text": "GitHub", "href": "https://github.com/oficinadigitalCL" },
+      { "text": "赞助者", "href": "https://github.com/sponsors/oficinadigitalCL" },
+      { "text": "文档", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2" }
+    ]
+  }
+}
