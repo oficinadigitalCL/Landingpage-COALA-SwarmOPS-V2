@@ -47,7 +47,7 @@ function SectionFallback() {
 function App() {
   return (
     <LanguageProvider>
-      <div className="bg-coala-darker text-white min-h-screen">
+      <div className="bg-coala-light dark:bg-coala-darker text-gray-900 dark:text-white min-h-screen transition-colors duration-300">
         <Navbar />
         <main>
           <Suspense fallback={<SectionFallback />}>

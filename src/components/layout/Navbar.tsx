@@ -38,7 +38,7 @@ function Navbar() {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           isScrolled
-            ? 'bg-coala-darker/80 backdrop-blur-md border-b border-white/5 shadow-lg'
+            ? 'bg-white/80 dark:bg-coala-darker/80 backdrop-blur-md border-b border-gray-200 dark:border-white/5 shadow-lg'
             : 'bg-transparent',
         )}
         role="navigation"
@@ -68,7 +68,7 @@ function Navbar() {
                     e.preventDefault();
                     handleNavClick(link.href);
                   }}
-                  className="text-sm text-gray-300 hover:text-coala-cyan transition-colors"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-coala-cyan transition-colors"
                 >
                   {link.text}
                 </a>
