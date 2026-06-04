@@ -4,7 +4,7 @@
 **Repo:** https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2  
 **Reference Repo (v1):** https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS  
 **Swarm Version:** 6.7  
-**Last Updated:** 2026-06-04T19:36:00Z
+**Last Updated:** 2026-06-04T22:14:31Z
 
 ---
 
@@ -13,6 +13,7 @@
 | Feature ID | Slug | Status | Branch | Merged At |
 |------------|------|--------|--------|-----------|
 | FEAT-001 | coala-landing-v2 | 🚀 DEPLOYING | `feat/coala-landing-v2` → `master` | 2026-06-04T06:45:00Z |
+| FEAT-002 | feat-002-i18n-zhtw | 🚀 MERGED | `feat/feat-002-i18n-zhtw` → `master` | 2026-06-04T22:10:00Z |
 
 ---
 
@@ -26,7 +27,7 @@
 | Animations | Framer Motion | Declarative, whileInView, excellent perf |
 | 3D / Particles | Three.js + @react-three/fiber | Hero swarm visual, WebGL with fallback |
 | Icons | Lucide-React | Tree-shakeable, no CDN dependency |
-| i18n | Custom `useLanguage` hook + JSON data | ES/EN/ZH ready without external lib |
+| i18n | Custom `useLanguage` hook + JSON data | ES/EN/ZH/ZH-TW ready without external lib |
 
 ---
 
@@ -61,7 +62,7 @@
 |-----------|------|--------|
 | Navbar | [`Navbar.tsx`](src/components/layout/Navbar.tsx) | ✅ Sticky + glass, scroll-aware |
 | ThemeToggle | [`ThemeToggle.tsx`](src/components/layout/ThemeToggle.tsx) | ✅ Sun/Moon icons, dark/light/system |
-| LanguageSwitcher | [`LanguageSwitcher.tsx`](src/components/layout/LanguageSwitcher.tsx) | ✅ ES/EN/ZH radio group |
+| LanguageSwitcher | [`LanguageSwitcher.tsx`](src/components/layout/LanguageSwitcher.tsx) | ✅ ES/EN/ZH/ZH-TW radio group |
 | Footer | [`Footer.tsx`](src/components/layout/Footer.tsx) | ✅ Minimal |
 | MobileMenu | [`MobileMenu.tsx`](src/components/layout/MobileMenu.tsx) | ✅ Slide-in with Framer Motion |
 
@@ -93,7 +94,7 @@
 | Hook | File | Status |
 |------|------|--------|
 | useTheme | [`useTheme.ts`](src/hooks/useTheme.ts) | ✅ dark/light/system + localStorage |
-| useLanguage | [`useLanguage.tsx`](src/hooks/useLanguage.tsx) | ✅ ES/EN/ZH Context provider |
+| useLanguage | [`useLanguage.tsx`](src/hooks/useLanguage.tsx) | ✅ ES/EN/ZH/ZH-TW Context provider + debounce 150ms |
 | useParticleSwarm | [`useParticleSwarm.ts`](src/hooks/useParticleSwarm.ts) | ✅ Canvas 2D |
 | useReveal | [`useReveal.ts`](src/hooks/useReveal.ts) | ✅ IntersectionObserver |
 | useScrollAnimation | [`useScrollAnimation.ts`](src/hooks/useScrollAnimation.ts) | ✅ |
@@ -106,7 +107,8 @@
 |------|-----------|--------|
 | [`es.json`](src/data/es.json) | Spanish | ✅ Primary |
 | [`en.json`](src/data/en.json) | English | ✅ Secondary |
-| [`zh.json`](src/data/zh.json) | Chinese | ✅ Tertiary |
+| [`zh.json`](src/data/zh.json) | Chinese (Simplified) | ✅ Tertiary |
+| [`zh-TW.json`](src/data/zh-TW.json) | Chinese (Traditional) | ✅ Quaternary — FEAT-002 |
 | [`modes.ts`](src/data/modes.ts) | — | ✅ 19 swarm modes typed |
 
 ---
@@ -119,7 +121,8 @@
 
 - Primary language: Spanish (Chilean tech tone)
 - Secondary: English (i18n-ready via useLanguage)
-- Tertiary: Chinese (zh.json added)
+- Tertiary: Chinese Simplified (zh.json)
+- Quaternary: Chinese Traditional (zh-TW.json) — FEAT-002
 - Forbidden: "synergy", "leverage", corporate fluff
 - Required: "ahorra plata en agentes", "instala en 5 minutos", "battle-tested"
 
@@ -133,6 +136,10 @@
 | 2026-06-04 | Three.js JSX types missing | `@react-three/fiber` types not auto-resolved | Added `src/types/three-jsx.d.ts` with module declarations | Phase 6 |
 | 2026-06-04 | GitHub Pages deploy: rutas de desarrollo en produccion | `tsc &&` bloqueaba `vite build`. Rutas absolutas sin base path. | Cambiado build script a `vite build` solo. Rutas relativas `./` en index.html. | Phase 8 |
 | 2026-06-04 | Light mode no funcionaba | `App.tsx` y `Navbar` usaban clases dark hardcodeadas sin prefijo `dark:` | Agregado `bg-coala-light dark:bg-coala-darker`, `text-gray-900 dark:text-white`, etc. | Post-merge |
+| 2026-06-04 | GAP-01: `FALLBACK_MAP` + `resolveContent()` no implementados | Design.md especificaba fallback `zh-TW → zh → es` no implementado en [`useLanguage.tsx`](src/hooks/useLanguage.tsx) | Postergado hasta que un componente lo requiera. Dead code sin consumidores. | FEAT-002 Phase 12 |
+| 2026-06-04 | GAP-02: `Locale` type en [`types/index.ts`](src/types/index.ts:2) sigue como `'es' \| 'en'` | Inconsistencia con `Language` type de i18n. Dominios separados: Locale es para SEO/metadatos. | No aplica al sistema i18n. Evaluar sincronización futura si SEO requiere zh/zh-TW. | FEAT-002 Phase 12 |
+| 2026-06-04 | npm audit: 1 critical pre-existente (esbuild dev server) | Vulnerabilidad en dependencia de Vite, no introducida por FEAT-002 | Documentado. No bloqueante para merge. | FEAT-002 Phase 12 |
+| 2026-06-04 | qwen-fast-checker (T0) no puede ejecutar comandos npm | Tier 0 es solo lectura; `npm run build` y `npm audit` requieren Tier 0.5+ | Escalar a flash-fast-coder (T0.5) para comandos npm. | FEAT-002 Phase 12 |
 
 ---
 
@@ -143,12 +150,16 @@
 | Barrel exports | `src/components/index.ts`, `src/hooks/index.ts` | Reduces import verbosity |
 | Lazy loading | `App.tsx` with `React.lazy` | Keeps initial bundle under budget |
 | Custom hooks isolation | `src/hooks/` | Animation & i18n logic separated from UI |
-| JSON data layer | `src/data/{es,en,zh}.json` | Language-agnostic, easy to extend |
+| JSON data layer | `src/data/{es,en,zh,zh-TW}.json` | Language-agnostic, easy to extend |
 | Canvas 2D fallback | `HeroSection.tsx` | WebGL unavailable → Canvas swarm |
 | Mobile particle reduction | `useParticleSwarm.ts` | 60% fewer particles on mobile |
 | Reduced motion support | `useMediaQuery.ts` + Framer Motion | Respects `prefers-reduced-motion` |
 | GitHub Pages base path | `vite.config.ts` | `base: '/Landingpage-COALA-SwarmOPS-V2/'` |
 | Tailwind dark mode class | `darkMode: 'class'` | `useTheme` toggles `dark` on `<html>` |
+| Barrel exports en data layer | `src/data/zh-TW.json` agregado sin modificar índices | Nuevos archivos JSON se integran sin cambios en barriles |
+| `Object.keys(FLAGS)` auto-descubre idiomas | [`LanguageSwitcher.tsx`](src/components/layout/LanguageSwitcher.tsx:23) | Agregar entrada a `FLAGS`/`LABELS` añade automáticamente el botón |
+| `Record<Language, ...>` fuerza exhaustividad | [`useLanguage.tsx`](src/hooks/useLanguage.tsx:48) | TypeScript rechaza compilación si falta una key en `contentMap` |
+| Vite inlinea JSON pequeño (<10KB) en bundle JS | `src/data/zh-TW.json` (~5KB) | Sin chunk separado; incluido en el bundle principal |
 
 ---
 
@@ -162,6 +173,77 @@
 | GitHub Actions workflow | ⚠️ Build corregido, esperando nuevo push |
 | GitHub Pages live | ⬜ Pending redeploy |
 | Lighthouse audit | ⬜ Pending |
+
+---
+
+## Features Completadas
+
+| Feature ID | Nombre | Fecha | SP | Workers | Errores | Tiempo |
+|------------|--------|-------|-----|---------|---------|--------|
+| FEAT-001 | Landingpage COALA-SwarmOPS v2 | 2026-06-04 | 13 | T0 (qwen-fast-checker, granite-context-scout) + T0.5 (flash-fast-coder) + T1 (senior) + T2 (us-enricher, spec-validator, evidence-checker) + T3 (strategic-planner, fastforward-writer) | react-dom/client types, Three.js JSX types, GitHub Pages deploy paths, light mode hardcoded dark | ~5h |
+| FEAT-002 | Soporte Chino Tradicional (ZH-TW) | 2026-06-04 | 5 | T0 (qwen-fast-checker) + T0.5 (flash-fast-coder) + T1 (senior) + T2 (evidence-checker) | GAP-01 FALLBACK_MAP no implementado, GAP-02 Locale type divergente, npm audit 1 critical pre-existente, T0 no ejecuta comandos npm | ~2h |
+
+---
+
+## Error Patterns
+
+| Pattern ID | Descripción | Frecuencia | Mitigación |
+|------------|-------------|------------|------------|
+| PATRON-001 | Design.md especifica features que no tienen consumidores reales (dead code) | 1 | Validar en Phase 0 si cada feature del diseño tiene un componente que la consume. Postergar sin culpa. |
+| PATRON-002 | Tipos de dominio separados (Locale vs Language) divergen sin causar bugs | 1 | Documentar como dominios independientes. Solo unificar si un mismo componente consume ambos. |
+| PATRON-003 | Vulnerabilidades pre-existentes en npm audit no deben bloquear feature branches | 2 | Documentar en evidence report. Solo bloquear si la feature introduce nuevas vulnerabilidades. |
+| PATRON-004 | Tier 0 (qwen-fast-checker) es solo lectura — no puede ejecutar npm scripts | 2 | Escalar automáticamente a T0.5 (flash-fast-coder) para cualquier tarea que requiera npm run/node. |
+
+---
+
+## Tier 0 Learning
+
+### Tareas Compatibles con T0
+- Verificar existencia de archivos y estructura de directorios
+- Validar sintaxis TypeScript/JSON (lectura estática)
+- Comparar keys entre archivos JSON (diff estructural)
+- Verificar imports y exports en código fuente
+- Leer y reportar contenido de archivos
+
+### Tareas Incompatibles con T0
+- Ejecutar `npm run build`, `npm run dev`, `npm audit`, `npm test`
+- Ejecutar cualquier comando Node.js o script del proyecto
+- Modificar archivos (solo lectura)
+- Ejecutar tests con Vitest o cualquier test runner
+
+### CB Historial (Cost-Benefit)
+| Fecha | Feature | Tarea T0 | Resultado | Costo evitado |
+|-------|---------|----------|-----------|---------------|
+| 2026-06-04 | FEAT-002 | Verificar estructura zh-TW.json vs es.json | ✅ Éxito | ~$0.02 (evitado T0.5) |
+| 2026-06-04 | FEAT-002 | Ejecutar npm run build | ❌ Falló — escalado a T0.5 | $0.00 (detección temprana) |
+
+---
+
+## Tier 0.5 Learning
+
+### Tareas Compatibles con T0.5
+- Generar archivos JSON de traducción (~100-150 líneas)
+- Extender tipos TypeScript (union types, Records)
+- Actualizar flags/labels en componentes React simples
+- Agregar reglas CSS (font stacks, word-break)
+- Ejecutar `npm run build` y reportar resultados
+- Implementar funciones utilitarias de ≤20 líneas
+
+### Tareas Incompatibles con T0.5
+- Diseñar arquitectura de fallback multi-idioma
+- Escribir tests unitarios o de integración
+- Debuggear errores de compilación complejos (multi-archivo)
+- Realizar auditorías de seguridad
+- Validar evidencia cross-file (requiere T2)
+
+### Costo T0.5 Acumulado
+| Fecha | Feature | Tarea | Costo |
+|-------|---------|-------|-------|
+| 2026-06-04 | FEAT-002 | Crear zh-TW.json (143 líneas) | ~$0.03 |
+| 2026-06-04 | FEAT-002 | Extender tipos en useLanguage.tsx | ~$0.02 |
+| 2026-06-04 | FEAT-002 | Actualizar LanguageSwitcher flags/labels | ~$0.02 |
+| 2026-06-04 | FEAT-002 | Agregar CSS font stack zh-TW | ~$0.02 |
+| **Total acumulado** | | | **~$0.09** |
 
 ---
 
