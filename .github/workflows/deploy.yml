@@ -1,8 +1,8 @@
-name: Deploy to GitHub Pages
+﻿name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, feat/coala-landing-v2]
+    branches: [master, main, feat/coala-landing-v2]
   workflow_dispatch:
 
 permissions:
@@ -52,3 +52,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+
+
