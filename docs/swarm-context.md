@@ -4,15 +4,15 @@
 **Repo:** https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2  
 **Reference Repo (v1):** https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS  
 **Swarm Version:** 6.7  
-**Last Updated:** 2026-06-04
+**Last Updated:** 2026-06-04T06:50:00Z
 
 ---
 
 ## Active Features
 
-| Feature ID | Slug | Status | Branch |
-|------------|------|--------|--------|
-| FEAT-001 | coala-landing-v2 | PLANNING_COMPLETE | feat/coala-landing-v2 |
+| Feature ID | Slug | Status | Branch | Merged At |
+|------------|------|--------|--------|-----------|
+| FEAT-001 | coala-landing-v2 | ✅ COMPLETED | `feat/coala-landing-v2` → `master` | 2026-06-04T06:45:00Z |
 
 ---
 
@@ -38,18 +38,19 @@
 - DOMPurify for any dynamic HTML content
 - HTTPS-only, SRI comments, no exposed .env
 - Build-time `robots.txt` + `sitemap.xml`
+- `SECURITY.md` present with CSP and env handling notes
 
 ---
 
 ## Performance Budgets
 
-| Metric | Budget |
-|--------|--------|
-| Initial bundle | < 500 KB |
-| Lighthouse Perf | ≥ 90 |
-| Lighthouse A11y | ≥ 95 |
-| Lighthouse Best | 100 |
-| Lighthouse SEO | ≥ 95 |
+| Metric | Budget | Actual |
+|--------|--------|--------|
+| Initial bundle | < 500 KB | Pending build |
+| Lighthouse Perf | ≥ 90 | Pending audit |
+| Lighthouse A11y | ≥ 95 | Pending audit |
+| Lighthouse Best | 100 | Pending audit |
+| Lighthouse SEO | ≥ 95 | Pending audit |
 
 ---
 
@@ -70,7 +71,8 @@
 
 | Date | Error | Cause | Fix | Phase |
 |------|-------|-------|-----|-------|
-| — | — | — | — | — |
+| 2026-06-04 | `react-dom/client` type not found | Missing `@types/react-dom` or TS config gap | Added `src/types/react-dom-client.d.ts` shim | Phase 0 |
+| 2026-06-04 | Three.js JSX types missing | `@react-three/fiber` types not auto-resolved | Added `src/types/three-jsx.d.ts` with module declarations | Phase 6 |
 
 ---
 
@@ -82,6 +84,21 @@
 | Lazy loading | `App.tsx` with `React.lazy` | Keeps initial bundle under budget |
 | Custom hooks isolation | `src/hooks/` | Animation logic separated from UI |
 | JSON data layer | `src/data/{es,en}.json` | Easy i18n migration later |
+| Canvas 2D fallback | `HeroSection.tsx` | WebGL unavailable → Canvas swarm |
+| Mobile particle reduction | `useParticleSwarm.ts` | 60% fewer particles on mobile |
+| Reduced motion support | `useMediaQuery.ts` + Framer Motion | Respects `prefers-reduced-motion` |
+| GitHub Pages base path | `vite.config.ts` | `base: '/Landingpage-COALA-SwarmOPS-V2/'` |
+
+---
+
+## Post-Merge Actions
+
+| # | Action | Owner | Status |
+|---|--------|-------|--------|
+| 1 | Push `master` to `origin/master` | senior / qwen-coder-executor | ⬜ PENDING |
+| 2 | Verify GitHub Actions deploy workflow triggers | devops-inspector | ⬜ PENDING |
+| 3 | Confirm GitHub Pages site live at `https://oficinadigitalCL.github.io/Landingpage-COALA-SwarmOPS-V2/` | evidence-checker | ⬜ PENDING |
+| 4 | Run Lighthouse audit on deployed site | evidence-checker | ⬜ PENDING |
 
 ---
 
@@ -90,3 +107,4 @@
 - Custom modes v6.0 YAML: https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/custom_modes/custom_modes_v6.0.yaml
 - Local docs: `D:\repositorios\enjambre\docs`
 - GitHub org: https://github.com/oficinadigitalCL
+- Deploy workflow: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
