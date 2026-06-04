@@ -5,12 +5,14 @@ const FLAGS: Record<Language, string> = {
   es: '🇪🇸',
   en: '🇬🇧',
   zh: '🇨🇳',
+  'zh-TW': '🇹🇼',
 };
 
 const LABELS: Record<Language, string> = {
   es: 'ES',
   en: 'EN',
   zh: '中文',
+  'zh-TW': '繁體中文',
 };
 
 function LanguageSwitcher() {

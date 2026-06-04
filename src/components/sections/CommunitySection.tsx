@@ -5,8 +5,6 @@ import content from '../../data/es.json';
 
 const communityContent = content.community;
 
-const REPO_V1 = 'oficinadigitalCL/Landingpage-COALA-SwarmOPS';
-const REPO_V2 = 'oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2';
 const URL_V1 = 'https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS/#';
 const URL_V2 = 'https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS-V2/';
 

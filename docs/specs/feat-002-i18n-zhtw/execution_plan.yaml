@@ -1,0 +1,423 @@
+spec_version: "6.7"
+feature_id: FEAT-002
+slug: feat-002-i18n-zhtw
+title: "Soporte Chino Tradicional (ZH-TW) — 4to idioma en i18n"
+gate_status: ENRICH_APPROVED
+planning_started_at: "2026-06-04T20:00:00Z"
+planning_completed_at: "2026-06-04T20:30:00Z"
+planner: "fastforward-writer (T3 · Kimi K2.6)"
+
+---
+# Dependency Graph (simplified)
+# Phase 0 → Phase 1-5 (parallel) → Phase 6 → Phase 7 → Phase 8 → Phase 9 → Phase 10 → Phase 11 → Phase 12
+# Phase 1-5 are data-translation phases that can run in parallel.
+# Phase 6+ are code changes that depend on data being ready.
+
+phases:
+  - phase: 0
+    name: "Branch & Environment Setup"
+    description: "Crear branch feat/feat-002-i18n-zhtw, verificar estado actual, leer design.md"
+    gate: PRE_BUILD_GATE
+    owner_tier: "T0 + T0.5 + T2"
+    task_range: "1–8"
+    tasks_total: 8
+    parallel_groups:
+      - group: "branch"
+        tasks: [1]
+        owner: senior
+        note: "Crear branch feat/feat-002-i18n-zhtw desde master"
+      - group: "verify-baseline"
+        tasks: [2, 3]
+        owner: qwen-fast-checker
+        note: "Verificar dev server y 3 idiomas existentes funcionan"
+      - group: "context-load"
+        tasks: [4, 5, 6, 7, 8]
+        owner: "evidence-checker + qwen-fast-checker + flash-fast-coder"
+        note: "Backup mental de archivos a modificar, verificar es.json/zh.json, leer design.md"
+    gate_exit_criteria:
+      - "Branch creado y activo"
+      - "npm run dev funciona sin errores"
+      - "Los 3 idiomas existentes (es/en/zh) funcionan sin regresión"
+      - "Equipo conoce el estado baseline de useLanguage.tsx y LanguageSwitcher.tsx"
+    rollback: "Eliminar branch y volver a master"
+
+  - phase: 1
+    name: "zh-TW.json — Navbar & Hero Sections"
+    description: "Crear archivo zh-TW.json con traducciones de navbar y hero en caracteres tradicionales"
+    gate: DATA_HERO_GATE
+    owner_tier: "T0.5"
+    task_range: "9–20"
+    tasks_total: 12
+    parallel_groups:
+      - group: "navbar-translations"
+        tasks: [9, 10, 11, 12, 13, 14, 15]
+        owner: flash-fast-coder
+        note: "Crear archivo, traducir navbar.logo + 5 links"
+      - group: "hero-translations"
+        tasks: [16, 17, 18, 19, 20]
+        owner: flash-fast-coder
+        note: "Traducir hero.title, subtitle, description, tagline, 3 CTAs"
+    gate_exit_criteria:
+      - "zh-TW.json creado con estructura navbar + hero"
+      - "Todas las traducciones usan caracteres tradicionales (verificar 體 vs 体, 軟 vs 软)"
+      - "Keys coinciden exactamente con es.json"
+    rollback: "Eliminar claves navbar/hero de zh-TW.json y re-traducir"
+
+  - phase: 2
+    name: "zh-TW.json — Problem & Solution Sections"
+    description: "Traducciones de secciones Problem y Solution con terminología técnica tradicional"
+    gate: DATA_PROBLEM_SOLUTION_GATE
+    owner_tier: "T0.5"
+    task_range: "21–32"
+    tasks_total: 12
+    depends_on: [1]
+    parallel_groups:
+      - group: "problem-translations"
+        tasks: [21, 22, 23, 24, 25, 26]
+        owner: flash-fast-coder
+        note: "Traducir problem: title, subtitle, description, 3 features"
+      - group: "solution-translations"
+        tasks: [27, 28, 29, 30, 31, 32]
+        owner: flash-fast-coder
+        note: "Traducir solution: title, subtitle, description, 3 features (v6.0, v6.5, v6.7)"
+    gate_exit_criteria:
+      - "Secciones problem y solution tienen todas las claves"
+      - "Terminología técnica usa variantes taiwanesas: 軟體, 資料, 程式, 網路, 資訊"
+      - "Nombres de features v6.x preservados (números de versión sin traducir)"
+    rollback: "Revertir claves problem/solution y re-traducir"
+
+  - phase: 3
+    name: "zh-TW.json — HowItWorks & ModesShowcase Sections"
+    description: "Traducciones de secciones HowItWorks y ModesShowcase"
+    gate: DATA_HOW_MODES_GATE
+    owner_tier: "T0.5"
+    task_range: "33–44"
+    tasks_total: 12
+    depends_on: [2]
+    parallel_groups:
+      - group: "howitworks-translations"
+        tasks: [33, 34, 35, 36, 37, 38, 39]
+        owner: flash-fast-coder
+        note: "Traducir howItWorks: title, subtitle, description, 3 steps, 1 CTA"
+      - group: "modes-translations"
+        tasks: [40, 41, 42, 43, 44]
+        owner: flash-fast-coder
+        note: "Traducir modesShowcase: title, subtitle, description, CTA + solution CTA"
+    gate_exit_criteria:
+      - "3 steps de HowItWorks tienen iconos preservados (Download, FileText, Rocket)"
+      - "Texto de steps es accionable y claro en tradicional"
+      - "ModesShowcase preserva '19' sin traducir (dato numérico)"
+    rollback: "Revertir y re-traducir"
+
+  - phase: 4
+    name: "zh-TW.json — WhoIsItFor & Pricing Sections"
+    description: "Traducciones de secciones WhoIsItFor (3 columnas) y Pricing (2 tiers)"
+    gate: DATA_WHO_PRICING_GATE
+    owner_tier: "T0.5"
+    task_range: "45–56"
+    tasks_total: 12
+    depends_on: [3]
+    parallel_groups:
+      - group: "whoisitfor-translations"
+        tasks: [45, 46, 47, 48, 49, 50]
+        owner: flash-fast-coder
+        note: "Traducir whoIsItFor: title, subtitle, description, 3 columns × (title+desc+bullets)"
+      - group: "pricing-translations"
+        tasks: [51, 52, 53, 54, 55, 56]
+        owner: flash-fast-coder
+        note: "Traducir pricing: title, subtitle, description, 2 tiers, CTA"
+    gate_exit_criteria:
+      - "3 columnas (開發者, 初學者, 企業) con bullets completos"
+      - "Pricing tiers preservan '$0' y '$0.14' sin modificar"
+      - "Texto 'GitHub 贊助' consistente en todas las secciones"
+    rollback: "Revertir y re-traducir"
+
+  - phase: 5
+    name: "zh-TW.json — Community, Footer & JSON Validation"
+    description: "Traducciones finales + validación estructural y de caracteres"
+    gate: DATA_VALID_GATE
+    owner_tier: "T0.5 + T2"
+    task_range: "57–68"
+    tasks_total: 12
+    depends_on: [4]
+    parallel_groups:
+      - group: "community-footer"
+        tasks: [57, 58, 59, 60, 61, 62, 63, 64, 65]
+        owner: flash-fast-coder
+        note: "Traducir community + footer: titles, descriptions, CTAs, copyright, links"
+      - group: "validation"
+        tasks: [66, 67, 68]
+        owner: "qwen-fast-checker + evidence-checker"
+        note: "Validar estructura JSON idéntica a es.json, verificar caracteres tradicionales, diff de keys"
+    gate_exit_criteria:
+      - "zh-TW.json tiene 144 líneas (misma cantidad que es.json)"
+      - "Diff estructural: zero missing keys, zero extra keys"
+      - "Verificación de caracteres: 0 caracteres simplificados accidentales"
+      - "JSON parsea sin errores (JSON.parse válido)"
+    rollback: "Corregir keys faltantes o caracteres incorrectos"
+
+  - phase: 6
+    name: "Type System Updates"
+    description: "Extender Language type, contentMap, FLAGS, LABELS para incluir zh-TW"
+    gate: TYPES_VALID_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "69–78"
+    tasks_total: 10
+    depends_on: [5]
+    parallel_groups:
+      - group: "language-type"
+        tasks: [69, 70, 71]
+        owner: flash-fast-coder
+        note: "Extender Language type, LANGUAGES[], verificar isValidLanguage"
+      - group: "content-map"
+        tasks: [72, 73, 74]
+        owner: flash-fast-coder
+        note: "Import zh-TW.json, extender contentMap, verificar tipado Record"
+      - group: "switcher-types"
+        tasks: [75, 76]
+        owner: flash-fast-coder
+        note: "Extender FLAGS y LABELS en LanguageSwitcher.tsx"
+      - group: "type-check"
+        tasks: [77, 78]
+        owner: qwen-fast-checker
+        note: "Verificar TS compila, extender Locale type si es necesario"
+    gate_exit_criteria:
+      - "TypeScript compila en modo strict sin errores"
+      - "Language type incluye 'zh-TW'"
+      - "contentMap tiene exactamente 4 entradas tipadas"
+      - "FLAGS y LABELS tienen entrada 'zh-TW'"
+    rollback: "Revertir cambios de tipos y re-aplicar"
+
+  - phase: 7
+    name: "Hook Layer: detectLanguage & HTML Lang"
+    description: "Actualizar detectLanguage() para zh-TW/zh-HK, actualizar useEffect lang, agregar fallback + debounce"
+    gate: HOOK_VALID_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "79–88"
+    tasks_total: 10
+    depends_on: [6]
+    parallel_groups:
+      - group: "detect-language"
+        tasks: [79, 80, 81, 82]
+        owner: flash-fast-coder
+        note: "Actualizar detectLanguage() para zh-TW, zh-HK, mantener zh para zh-CN"
+      - group: "html-lang"
+        tasks: [83, 84, 85]
+        owner: "flash-fast-coder + qwen-fast-checker"
+        note: "Actualizar useEffect lang para mapear zh-TW → 'zh-TW', verificar sin regresión"
+      - group: "quality"
+        tasks: [86, 87, 88]
+        owner: flash-fast-coder
+        note: "Debounce 150ms, FALLBACK_MAP, console.warn condicional en DEV"
+    gate_exit_criteria:
+      - "detectLanguage() reconoce zh-TW y zh-HK del navegador"
+      - "document.documentElement.lang = 'zh-TW' cuando language es 'zh-TW'"
+      - "document.documentElement.lang = 'zh-CN' cuando language es 'zh' (sin cambios)"
+      - "Debounce de 150ms previene race conditions"
+      - "Fallback zh-TW → zh funciona con console.warn en DEV"
+    rollback: "Revertir useLanguage.tsx a versión baseline"
+
+  - phase: 8
+    name: "Component Layer: LanguageSwitcher & MobileMenu"
+    description: "Verificar integración visual y funcional del botón zh-TW, ARIA, mobile"
+    gate: UI_VALID_GATE
+    owner_tier: "T0.5 + T0 + T2"
+    task_range: "89–98"
+    tasks_total: 10
+    depends_on: [7]
+    parallel_groups:
+      - group: "switcher-verify"
+        tasks: [89, 90, 91, 92, 93]
+        owner: "qwen-fast-checker + evidence-checker"
+        note: "Verificar iteración automática, orden, clases activas, ARIA"
+      - group: "switcher-functional"
+        tasks: [94, 98]
+        owner: test-engineer
+        note: "Probar click en zh-TW dispara setLanguage, verificar no regresión ES/EN/ZH"
+      - group: "mobile-verify"
+        tasks: [95, 96, 97]
+        owner: qwen-fast-checker
+        note: "Verificar label en mobile/desktop, MobileMenu incluye 4 opciones"
+    gate_exit_criteria:
+      - "LanguageSwitcher renderiza 4 botones (ES, EN, 中文, 繁體中文)"
+      - "Botón zh-TW muestra estado activo correcto al seleccionarse"
+      - "ARIA: role='radio', aria-checked, aria-label correctos para zh-TW"
+      - "Mobile menu muestra y permite seleccionar zh-TW"
+      - "Sin regresión en botones ES, EN, ZH"
+    rollback: "Revertir LanguageSwitcher.tsx si hay regresión"
+
+  - phase: 9
+    name: "CSS, Font Stack & Accessibility"
+    description: "Agregar font stack para chino tradicional, reglas word-break, Lighthouse audit"
+    gate: CSS_VALID_GATE
+    owner_tier: "T0.5 + T0 + T2"
+    task_range: "99–108"
+    tasks_total: 10
+    depends_on: [8]
+    parallel_groups:
+      - group: "css-changes"
+        tasks: [99, 100, 101, 102]
+        owner: flash-fast-coder
+        note: "Variable --font-zh-tw, reglas html[lang='zh-TW'], word-break, overflow-wrap"
+      - group: "css-verify"
+        tasks: [103, 104]
+        owner: qwen-fast-checker
+        note: "Verificar Noto Sans TC en font stack, system-ui como fallback"
+      - group: "visual-test"
+        tasks: [105, 106, 107]
+        owner: test-engineer
+        note: "Probar renderizado de caracteres tradicionales en Chrome, Firefox, Safari"
+      - group: "a11y-audit"
+        tasks: [108]
+        owner: evidence-checker
+        note: "Lighthouse accessibility ≥95 con zh-TW activo"
+    gate_exit_criteria:
+      - "Font stack para zh-TW incluye 6 fuentes con system-ui fallback"
+      - "Caracteres tradicionales se renderizan correctamente en 3 navegadores"
+      - "No hay caracteres tofu (□) o fallback a fuente incorrecta"
+      - "Lighthouse accessibility ≥95"
+    rollback: "Revertir cambios en index.css"
+
+  - phase: 10
+    name: "Unit Testing"
+    description: "Tests unitarios para detectLanguage, isValidLanguage, contentMap, LanguageProvider"
+    gate: UNIT_TEST_GATE
+    owner_tier: "T2"
+    task_range: "109–118"
+    tasks_total: 10
+    depends_on: [7]
+    parallel_groups:
+      - group: "detect-tests"
+        tasks: [109, 110, 111, 112, 113]
+        owner: test-engineer
+        note: "5 tests para detectLanguage: localStorage zh-TW, nav zh-TW, nav zh-HK, nav zh-CN, corrupto"
+      - group: "validation-tests"
+        tasks: [114, 115]
+        owner: test-engineer
+        note: "isValidLanguage('zh-TW') = true, isValidLanguage('invalid') = false"
+      - group: "provider-tests"
+        tasks: [116, 117]
+        owner: test-engineer
+        note: "setLanguage persiste en localStorage, document.documentElement.lang se actualiza"
+      - group: "content-tests"
+        tasks: [118]
+        owner: test-engineer
+        note: "contentMap['zh-TW'] es accesible con claves esperadas"
+    gate_exit_criteria:
+      - "10/10 tests unitarios pasan (green)"
+      - "detectLanguage cubre zh-TW, zh-HK, zh-CN, corrupt localStorage, unsupported"
+      - "isValidLanguage acepta zh-TW y rechaza valores inválidos"
+      - "LanguageProvider persiste correctamente en localStorage"
+    rollback: "Corregir lógica en useLanguage.tsx y re-ejecutar tests"
+
+  - phase: 11
+    name: "Integration Testing"
+    description: "Tests de integración para LanguageSwitcher, cambio de idioma, fallback, mobile, animaciones"
+    gate: INTEGRATION_TEST_GATE
+    owner_tier: "T2"
+    task_range: "119–128"
+    tasks_total: 10
+    depends_on: [8, 10]
+    parallel_groups:
+      - group: "switcher-integration"
+        tasks: [119, 120, 121]
+        owner: test-engineer
+        note: "Render 4 botones, click actualiza textos, ciclo zh-TW→es→zh-TW"
+      - group: "persistence-integration"
+        tasks: [122, 123]
+        owner: test-engineer
+        note: "Recarga con zh-TW en localStorage, sin flash de idioma"
+      - group: "fallback-mobile"
+        tasks: [124, 125]
+        owner: test-engineer
+        note: "Fallback zh-TW→zh, mobile menu 4 opciones"
+      - group: "edge-cases"
+        tasks: [126, 127, 128]
+        owner: test-engineer
+        note: "Cambio rápido sin race condition, TypewriterText se reinicia, HeroSection renderiza"
+    gate_exit_criteria:
+      - "10/10 tests de integración pasan (green)"
+      - "LanguageSwitcher integrado con LanguageProvider funciona correctamente"
+      - "Persistencia en localStorage sin flash de contenido"
+      - "Fallback zh-TW → zh funciona"
+      - "Sin race conditions en cambios rápidos"
+    rollback: "Corregir componentes y re-ejecutar tests"
+
+  - phase: 12
+    name: "E2E, Build & Final Validation"
+    description: "E2E flows, build verification, bundle size check, regression en ES/EN/ZH, security audit, merge"
+    gate: RELEASE_GATE
+    owner_tier: "T0 + T2 + T1"
+    task_range: "129–136"
+    tasks_total: 8
+    depends_on: [9, 11]
+    parallel_groups:
+      - group: "e2e-flows"
+        tasks: [129, 130, 131]
+        owner: test-engineer
+        note: "Flujo zh-TW auto-detect, flujo manual todas las secciones, mobile hamburguesa"
+      - group: "build-verify"
+        tasks: [132, 133]
+        owner: "qwen-fast-checker + evidence-checker"
+        note: "npm run build sin errores, bundle size +6KB máx"
+      - group: "regression-security"
+        tasks: [134, 135]
+        owner: "evidence-checker + security-auditor"
+        note: "Sin regresión ES/EN/ZH, npm audit limpio"
+      - group: "merge"
+        tasks: [136]
+        owner: senior
+        note: "Merge feat/feat-002-i18n-zhtw → master con Conventional Commits"
+    gate_exit_criteria:
+      - "3 flujos E2E completados exitosamente"
+      - "npm run build sin errores"
+      - "Bundle size increase ≤6KB (gzipped)"
+      - "ES, EN, ZH funcionan sin regresión"
+      - "npm audit: zero critical/high vulnerabilities"
+      - "PR mergeado a master con mensaje 'feat(i18n): add Traditional Chinese (zh-TW) support'"
+    rollback: "Revertir merge si E2E falla en producción"
+
+# Risk Register
+risks:
+  - id: R01
+    description: "Confusión de usuario entre 中文 (simplificado) y 繁體中文 (tradicional)"
+    mitigation: "Labels claramente diferenciados en LanguageSwitcher: 🇨🇳 中文 vs 🇹🇼 繁體中文"
+    owner: flash-fast-coder
+    phase: 8
+
+  - id: R02
+    description: "Traducción automática introduce caracteres simplificados accidentalmente"
+    mitigation: "Validación manual de caracteres clave (體/体, 軟/软, 資/资); diff visual con zh.json"
+    owner: evidence-checker
+    phase: 5
+
+  - id: R03
+    description: "Aumento de bundle size por zh-TW.json"
+    mitigation: "Archivo JSON ~5KB; lazy load si excede budget de 500KB"
+    owner: evidence-checker
+    phase: 12
+
+  - id: R04
+    description: "Textos ZH-TW exceden ancho de contenedores en mobile"
+    mitigation: "CSS word-break: keep-all + overflow-wrap: break-word + test responsive específico"
+    owner: flash-fast-coder
+    phase: 9
+
+  - id: R05
+    description: "Regresión silenciosa en detectLanguage para ES/EN/ZH"
+    mitigation: "Tests de regresión explícitos en Phase 12 task 134"
+    owner: evidence-checker
+    phase: 12
+
+  - id: R06
+    description: "Font 'Noto Sans TC' no disponible → tofu characters"
+    mitigation: "Font stack con 6 fallbacks hasta system-ui; verificar en 3 navegadores"
+    owner: test-engineer
+    phase: 9
+
+# Context Update Trigger
+context_update:
+  trigger: "After phase 12 GATE_PASS"
+  owner: context-guardian
+  file: "docs/swarm-context.md"
+  action: "Append FEAT-002 completion: zh-TW as 4th language, errors learned, patterns detected"

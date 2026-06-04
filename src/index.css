@@ -7,6 +7,9 @@
   --color-coala-purple: #8B5CF6;
   --color-bg-dark: #0A0A0F;
   --color-bg-darker: #050508;
+
+  /* Font stack para Chino Tradicional (Taiwán/Hong Kong) */
+  --font-zh-tw: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "蘋方-繁", "Heiti TC", "黑體-繁", system-ui, -apple-system, sans-serif;
 }
 
 @layer base {
@@ -31,6 +34,18 @@
   ::selection {
     background-color: rgba(0, 255, 255, 0.3);
     color: #ffffff;
+  }
+
+  /* ─── Chino Tradicional (zh-TW): font + word breaking ─── */
+  html[lang="zh-TW"] body {
+    font-family: var(--font-zh-tw);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  /* Prevenir que caracteres CJK rompan layout en contenedores estrechos */
+  html[lang="zh-TW"] .text-balance {
+    text-wrap: balance;
   }
 
   :focus-visible {
