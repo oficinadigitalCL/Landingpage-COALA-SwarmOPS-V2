@@ -19,7 +19,7 @@ export interface CSPDirectives {
 
 export const DEFAULT_CSP: CSPDirectives = {
   'default-src': ["'self'"],
-  'script-src': ["'self'"],
+  'script-src': ["'self'", "'unsafe-eval'"], // needed for Three.js WebGL shaders
   'style-src': ["'self'", "'unsafe-inline'"], // needed for Tailwind CSS
   'img-src': ["'self'", "data:"],
   'font-src': ["'self'"],
