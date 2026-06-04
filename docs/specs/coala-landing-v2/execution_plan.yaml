@@ -1,0 +1,354 @@
+spec_version: "6.7"
+feature_id: FEAT-001
+slug: coala-landing-v2
+title: "Landingpage COALA-SwarmOPS v2.0 — React + Interactividad + Seguridad"
+gate_status: SPEC_VALID
+planning_started_at: "2026-06-04T05:00:00Z"
+planning_completed_at: "2026-06-04T05:10:00Z"
+planner: "strategic-planner (T3 · Kimi K2.6)"
+
+---
+# Dependency Graph (simplified)
+# Phase 0 → Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 → Phase 7 → Phase 8 → Phase 9
+# All phases depend on previous phase GATE_PASS.
+
+phases:
+  - phase: 0
+    name: "Project Scaffold & Tooling"
+    description: "Initialize repo, install deps, configure Vite + Tailwind + TS, create folder structure"
+    gate: PRE_BUILD_GATE
+    owner_tier: "T0 + T0.5 + T1"
+    task_range: "1–24"
+    tasks_total: 24
+    parallel_groups:
+      - group: "git-init"
+        tasks: [1, 2]
+        owner: senior
+        note: "Create branch feat/coala-landing-v2"
+      - group: "deps-install"
+        tasks: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        owner: qwen-coder-executor
+        note: "Run npm install for all packages"
+      - group: "config-files"
+        tasks: [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+        owner: flash-fast-coder
+        note: "Generate tsconfig, vite.config.ts, tailwind.config.js, index.html, entry points"
+      - group: "folders"
+        tasks: [24]
+        owner: qwen-coder-executor
+        note: "mkdir src/{components,hooks,types,data,lib}"
+    gate_exit_criteria:
+      - "npm install succeeds with zero peer-dep warnings (critical only)"
+      - "vite dev server starts without errors"
+      - "TypeScript compiles in strict mode"
+      - "All 24 tasks marked done in tasks.md"
+    rollback: "Delete node_modules + package-lock and re-install"
+
+  - phase: 1
+    name: "Types & Data Layer"
+    description: "TypeScript types, ES/EN JSON content, custom modes data from v6.0/v6.5"
+    gate: TYPES_VALID_GATE
+    owner_tier: "T0.5"
+    task_range: "25–48"
+    tasks_total: 24
+    parallel_groups:
+      - group: "types"
+        tasks: [25, 26, 27]
+        owner: flash-fast-coder
+        note: "src/types/{index,mode,section}.ts"
+      - group: "i18n-content"
+        tasks: [28, 29]
+        owner: flash-fast-coder
+        note: "src/data/{es,en}.json — all 9 sections + CTAs"
+      - group: "modes-data"
+        tasks: [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+        owner: flash-fast-coder
+        note: "src/data/modes.ts — 19 swarm modes from v6.0 YAML + v6.5 docs"
+    gate_exit_criteria:
+      - "All types compile with zero TS errors"
+      - "JSON content loads correctly in dev"
+      - "Modes data matches v6.0 YAML structure"
+      - "Sponsor/config framing present in all ES copy"
+    rollback: "Revert data files to last known good JSON"
+
+  - phase: 2
+    name: "Utility & Security Layer"
+    description: "Utils, CSP builder, sanitization, env validation, SECURITY.md, build-time robots/sitemap"
+    gate: SEC_LAYER_GATE
+    owner_tier: "T0.5 + T2"
+    task_range: "49–64"
+    tasks_total: 16
+    parallel_groups:
+      - group: "utils"
+        tasks: [49, 50, 51, 52]
+        owner: flash-fast-coder
+        note: "src/lib/{utils,csp,sanitize,env}.ts"
+      - group: "build-time-assets"
+        tasks: [53, 54]
+        owner: flash-fast-coder
+        note: "Vite plugin for robots.txt + sitemap.xml"
+      - group: "security-hardening"
+        tasks: [55, 56, 57, 58, 59, 60, 61, 62, 63, 64]
+        owner: "flash-fast-coder + security-auditor"
+        note: "Audit CSP, env exposure, console stripping, SRI comments"
+    gate_exit_criteria:
+      - "CSP meta tag present and syntactically valid"
+      - "No secrets in committed files (scan with git-secrets or manual)"
+      - "SECURITY.md exists and is accurate"
+      - "security-auditor signs off (manual review)"
+    rollback: "Remove .env files from git history if leaked"
+
+  - phase: 3
+    name: "Animation & Hook Layer"
+    description: "All custom hooks: media query, theme, reveal, scroll, typing, particle swarm, parallax"
+    gate: HOOKS_VALID_GATE
+    owner_tier: "T0.5 + T2"
+    task_range: "65–88"
+    tasks_total: 24
+    parallel_groups:
+      - group: "base-hooks"
+        tasks: [65, 66, 67, 68, 69, 78]
+        owner: flash-fast-coder
+        note: "useMediaQuery, useTheme, useReveal, useScrollAnimation, useTypingEffect, useParallax"
+      - group: "particle-swarm"
+        tasks: [70, 71, 72, 73, 74, 75, 76, 77]
+        owner: flash-fast-coder
+        note: "Canvas 2D swarm with connection logic, mouse interaction, mobile reduction"
+      - group: "hook-tests"
+        tasks: [80, 81, 82, 83, 84]
+        owner: test-engineer
+        note: "Validate hooks with React Testing Library + Jest/Vitest"
+      - group: "hook-verification"
+        tasks: [85, 86, 87, 88]
+        owner: "flash-fast-coder + evidence-checker + qwen-fast-checker"
+        note: "Barrel exports, JSDoc, strict TS, memory leak checks"
+    gate_exit_criteria:
+      - "All hooks pass unit tests"
+      - "useParticleSwarm renders ≥30 FPS on mid-tier mobile"
+      - "useTheme persists preference and respects system pref"
+      - "No memory leaks detected in animation hooks"
+      - "TypeScript strict mode passes"
+    rollback: "Revert to last hook commit and re-implement"
+
+  - phase: 4
+    name: "UI Components"
+    description: "Reusable UI primitives and layout components (Navbar, Footer, cards, buttons, toggles)"
+    gate: UI_VALID_GATE
+    owner_tier: "T0.5 + T2"
+    task_range: "89–112"
+    tasks_total: 24
+    parallel_groups:
+      - group: "ui-primitives"
+        tasks: [89, 90, 91, 92, 93, 94]
+        owner: flash-fast-coder
+        note: "GlowButton, AnimatedCard, FlipCard, TypewriterText, SectionReveal, StepConnector"
+      - group: "layout"
+        tasks: [95, 96, 97, 98, 99]
+        owner: flash-fast-coder
+        note: "Navbar, ThemeToggle, Footer, MobileMenu, smooth-scroll links"
+      - group: "ui-tests"
+        tasks: [100, 101, 102, 103, 104, 105, 106]
+        owner: test-engineer
+        note: "Render, hover, flip, typing, scroll, mobile menu, theme toggle"
+      - group: "ui-verification"
+        tasks: [107, 108, 109, 110, 111, 112]
+        owner: "flash-fast-coder + evidence-checker + qwen-fast-checker"
+        note: "Barrel exports, className passthrough, ARIA, a11y checks"
+    gate_exit_criteria:
+      - "All UI components render in Storybook or isolated test"
+      - "ARIA labels present on all interactive elements"
+      - "a11y checks pass (axe-core or Lighthouse)"
+      - "All components accept className for extensibility"
+    rollback: "Revert component files and re-generate"
+
+  - phase: 5
+    name: "Section Components"
+    description: "All 9 content sections wired into App.tsx with lazy loading and Suspense"
+    gate: SECTIONS_VALID_GATE
+    owner_tier: "T0.5 + T2"
+    task_range: "113–144"
+    tasks_total: 32
+    parallel_groups:
+      - group: "hero"
+        tasks: [113, 114, 115, 116, 117]
+        owner: flash-fast-coder
+        note: "HeroSection with swarm, typing, parallax, CTAs"
+      - group: "content-sections"
+        tasks: [118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135]
+        owner: flash-fast-coder
+        note: "Problem, Solution, HowItWorks, ModesShowcase, WhoIsItFor, Pricing, Community"
+      - group: "app-wiring"
+        tasks: [136, 137, 138, 139]
+        owner: flash-fast-coder
+        note: "Barrel exports, lazy loading, Suspense fallback, section order"
+      - group: "section-tests"
+        tasks: [140, 141, 142]
+        owner: test-engineer
+        note: "Render all sections, verify order, scroll nav"
+      - group: "copy-verification"
+        tasks: [143, 144]
+        owner: evidence-checker
+        note: "Sponsor/config framing, Chilean Spanish tone"
+    gate_exit_criteria:
+      - "All 9 sections render without runtime errors"
+      - "Lazy loading works (network tab shows chunks)"
+      - "Scroll navigation jumps to correct section anchors"
+      - "Copy respects sponsor/config framing in every section"
+      - "All section tests pass"
+    rollback: "Revert App.tsx and re-wire sections"
+
+  - phase: 6
+    name: "3D / Swarm Demo & Advanced Effects"
+    description: "Interactive swarm demo canvas, Three.js hero variant, WebGL fallbacks, performance checks"
+    gate: FX_VALID_GATE
+    owner_tier: "T0.5 + T2"
+    task_range: "145–160"
+    tasks_total: 16
+    parallel_groups:
+      - group: "swarm-demo"
+        tasks: [145, 146, 147, 148, 149, 150]
+        owner: flash-fast-coder
+        note: "Click-to-spawn agents, seek behavior, mobile optimization"
+      - group: "threejs-hero"
+        tasks: [151, 152, 153, 154, 155]
+        owner: flash-fast-coder
+        note: "Optional @react-three/fiber hero background with neon shaders"
+      - group: "fx-tests"
+        tasks: [156, 157]
+        owner: test-engineer
+        note: "WebGL render test, Canvas 2D fallback test"
+      - group: "fx-verification"
+        tasks: [158, 159, 160]
+        owner: evidence-checker
+        note: "Reduced motion, mobile FPS ≥30, lazy chunk for Three.js"
+    gate_exit_criteria:
+      - "Swarm demo spawns agents on click/tap"
+      - "Three.js scene renders on capable devices"
+      - "Canvas 2D fallback works when WebGL unavailable"
+      - "Mobile FPS ≥30 on mid-tier device"
+      - "Reduced motion disables complex animations"
+      - "Three.js chunk is lazy-loaded (not in initial bundle)"
+    rollback: "Remove Three.js hero, keep Canvas 2D only"
+
+  - phase: 7
+    name: "Assets, SEO & Public Files"
+    description: "Favicon, OG image, meta tags, semantic HTML, PWA manifest, screenshots, sitemap"
+    gate: SEO_VALID_GATE
+    owner_tier: "T0.5 + T0 + T2"
+    task_range: "161–176"
+    tasks_total: 16
+    parallel_groups:
+      - group: "assets"
+        tasks: [161, 162, 170]
+        owner: "qwen-coder-executor + flash-fast-coder"
+        note: "Copy favicon, generate OG image, copy screenshots"
+      - group: "meta-tags"
+        tasks: [163, 164, 165, 166, 167, 168, 169, 171, 172]
+        owner: flash-fast-coder
+        note: "OG, Twitter Card, canonical, semantic HTML, lang attr, robots, sitemap, manifest, apple-touch-icon"
+      - group: "seo-verification"
+        tasks: [173, 174, 175, 176]
+        owner: "evidence-checker + qwen-fast-checker"
+        note: "Alt text, heading hierarchy, meta validator, no duplicates"
+    gate_exit_criteria:
+      - "OG image is 1200×630 and referenced correctly"
+      - "All meta tags present and valid"
+      - "Semantic HTML structure passes validator"
+      - "sitemap.xml and robots.txt generated at build time"
+      - "All images have alt text"
+      - "Heading hierarchy is logical (h1→h2→h3)"
+    rollback: "Regenerate meta tags from template"
+
+  - phase: 8
+    name: "Build, Deploy & Documentation"
+    description: "README, GitHub Actions workflow, build verification, Lighthouse audits, bundle size check"
+    gate: BUILD_VALID_GATE
+    owner_tier: "T0.5 + T0 + T1 + T2"
+    task_range: "177–188"
+    tasks_total: 12
+    parallel_groups:
+      - group: "docs"
+        tasks: [177, 179, 180]
+        owner: flash-fast-coder
+        note: "README.md with install/build/deploy, GitHub Actions workflow"
+      - group: "build-verify"
+        tasks: [178, 181, 182]
+        owner: qwen-coder-executor
+        note: "Workflow config, npm run build, verify dist/"
+      - group: "lighthouse"
+        tasks: [183, 184, 185, 186, 187, 188]
+        owner: evidence-checker
+        note: "Base path match, Lighthouse 4 categories, bundle <500KB"
+    gate_exit_criteria:
+      - "`npm run build` completes with zero errors"
+      - "dist/ contains index.html and chunked assets"
+      - "GitHub Actions workflow is syntactically valid (YAML lint)"
+      - "Lighthouse Performance ≥90"
+      - "Lighthouse Accessibility ≥95"
+      - "Lighthouse Best Practices = 100"
+      - "Lighthouse SEO ≥95"
+      - "Initial bundle < 500KB (gzipped or brotli)"
+    rollback: "Fix build errors and re-run; if bundle too large, split more chunks"
+
+  - phase: 9
+    name: "Security Audit & Final Review"
+    description: "npm audit, git history scan, code review, merge to main"
+    gate: RELEASE_GATE
+    owner_tier: "T2 + T1"
+    task_range: "189–192"
+    tasks_total: 4
+    parallel_groups:
+      - group: "security-final"
+        tasks: [189, 190]
+        owner: security-auditor
+        note: "npm audit, git history secret scan"
+      - group: "review-merge"
+        tasks: [191, 192]
+        owner: "code-reviewer + senior"
+        note: "Code review T2, merge via PR with Conventional Commits"
+    gate_exit_criteria:
+      - "npm audit returns zero critical/high vulnerabilities"
+      - "No secrets found in git history"
+      - "code-reviewer approves PR"
+      - "PR merged to main with conventional commit message"
+      - "GitHub Pages deploys successfully"
+    rollback: "If audit fails, fix vulnerabilities before merge"
+
+# Risk Register
+risks:
+  - id: R01
+    description: "Three.js bundle may exceed budget if not split correctly"
+    mitigation: "Manual chunk in vite.config.ts; lazy load; fallback to Canvas 2D"
+    owner: flash-fast-coder
+    phase: 6
+
+  - id: R02
+    description: "Canvas particle swarm may drop FPS on low-end mobile"
+    mitigation: "Reduce particle count by 60% on mobile; use requestAnimationFrame with delta time"
+    owner: flash-fast-coder
+    phase: 3
+
+  - id: R03
+    description: "CSP may block legitimate inline styles from Tailwind"
+    mitigation: "Use 'unsafe-inline' for style-src (acceptable for static site) or nonce plugin"
+    owner: security-auditor
+    phase: 2
+
+  - id: R04
+    description: "Custom modes data from external YAML may drift"
+    mitigation: "Copy/paste verified subset into modes.ts; add comment with source commit SHA"
+    owner: evidence-checker
+    phase: 1
+
+  - id: R05
+    description: "GitHub Pages base path mismatch causes 404 on assets"
+    mitigation: "Double-check base in vite.config.ts matches repo name exactly"
+    owner: evidence-checker
+    phase: 8
+
+# Swarm Context Update Trigger
+context_update:
+  trigger: "After phase 9 GATE_PASS"
+  owner: context-guardian
+  file: "docs/swarm-context.md"
+  action: "Append feature completion summary, errors learned, patterns detected"
