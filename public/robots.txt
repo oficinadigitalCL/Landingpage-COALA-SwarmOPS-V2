@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS-V2/sitemap.xml

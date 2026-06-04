@@ -1,0 +1,143 @@
+{
+  "navbar": {
+    "logo": "COALA SwarmOPS",
+    "links": [
+      { "text": "Inicio", "href": "#hero" },
+      { "text": "Cómo Funciona", "href": "#how-it-works" },
+      { "text": "Modos", "href": "#modes" },
+      { "text": "Precios", "href": "#pricing" },
+      { "text": "Comunidad", "href": "#community" }
+    ]
+  },
+  "hero": {
+    "id": "hero",
+    "title": "COALA-SwarmOPS",
+    "subtitle": "Enjambre de Agentes IA",
+    "description": "Orquesta tu propio enjambre de agentes de inteligencia artificial. Ahorra plata, escala tus proyectos y mantén el control total con nuestra configuración battle-tested.",
+    "tagline": "Deja de pagar por agentes individuales. Coordínalos todos.",
+    "ctas": [
+      { "text": "Sponsor en GitHub", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "primary", "icon": "Heart" },
+      { "text": "Instalar Ahora", "href": "#how-it-works", "variant": "secondary", "icon": "Download" },
+      { "text": "Documentación", "href": "#modes", "variant": "outline", "icon": "BookOpen" }
+    ]
+  },
+  "problem": {
+    "id": "problem",
+    "title": "¿Cansado de los agentes IA estáticos?",
+    "subtitle": "El problema del desarrollo tradicional",
+    "description": "Los workflows tradicionales te obligan a elegir UN agente a la vez. Cambiar de contexto cuesta plata, tiempo y cordura. Con herramientas estáticas, cada tarea requiere un nuevo prompt, un nuevo contexto, un nuevo costo.",
+    "features": [
+      { "icon": "Zap", "title": "Sin coordinación", "description": "Los agentes trabajan aislados, sin compartir contexto ni resultados." },
+      { "icon": "DollarSign", "title": "Costos ocultos", "description": "Cada cambio de agente implica reconstruir el contexto desde cero." },
+      { "icon": "Clock", "title": "Tiempo perdido", "description": "Cambiar manualmente entre herramientas rompe tu flow de desarrollo." }
+    ]
+  },
+  "solution": {
+    "id": "solution",
+    "title": "Un enjambre que trabaja para ti",
+    "subtitle": "Coordinación inteligente multi-agente",
+    "description": "COALA-SwarmOPS coordina múltiples agentes especializados como un enjambre. Cada agente hace lo que mejor sabe hacer, compartiendo contexto automáticamente. Tú solo pides la feature — el swarm la ejecuta.",
+    "features": [
+      { "icon": "GitBranch", "title": "v6.0 — Custom Modes", "description": "19 modos especializados con tiers T0 a T3. Cada modo es un agente experto en su dominio." },
+      { "icon": "Shield", "title": "v6.5 — Circuit Breakers", "description": "Protección contra fallos en cascada. Si un agente falla 2 veces, se aísla automáticamente." },
+      { "icon": "Network", "title": "v6.7 — CoALA Swarm", "description": "Ciclo de decisión completo: Proponer → Evaluar → Seleccionar → Ejecutar con memoria de trabajo." }
+    ],
+    "ctas": [
+      { "text": "Ver Modos Disponibles", "href": "#modes", "variant": "primary", "icon": "Grid3X3" }
+    ]
+  },
+  "howItWorks": {
+    "id": "how-it-works",
+    "title": "Cómo funciona el enjambre",
+    "subtitle": "3 pasos para domar la complejidad",
+    "description": "Instala en 5 minutos. Nuestra configuración custom viene pre-armada con 19 modos battle-tested. Solo necesitas tu API key y una carpeta de proyecto.",
+    "steps": [
+      { "number": 1, "title": "Instala", "description": "Clona el repo, configura tu API key. 5 minutos y estás listo.", "icon": "Download" },
+      { "number": 2, "title": "Describe tu feature", "description": "Escribe lo que necesitas en lenguaje natural. El swarm entiende el contexto.", "icon": "FileText" },
+      { "number": 3, "title": "El enjambre ejecuta", "description": "Los agentes se coordinan solos. Tú solo revisas el resultado final.", "icon": "Rocket" }
+    ],
+    "ctas": [
+      { "text": "Comenzar Ahora", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2", "variant": "primary", "icon": "ArrowRight" }
+    ]
+  },
+  "modesShowcase": {
+    "id": "modes",
+    "title": "19 modos. Un enjambre.",
+    "subtitle": "Cada agente es especialista en su tarea",
+    "description": "Desde ejecución simple en T0 hasta planificación estratégica en T3. Cada modo está optimizado para su tarea específica, con el modelo correcto al costo justo.",
+    "ctas": [
+      { "text": "Explorar Todos los Modos", "href": "#", "variant": "primary", "icon": "Grid3X3" }
+    ]
+  },
+  "whoIsItFor": {
+    "id": "who-is-it-for",
+    "title": "¿Para quién es COALA-SwarmOPS?",
+    "subtitle": "De principiante a enterprise",
+    "description": "No importa si estás empezando o si manejas una empresa. Tenemos una configuración que se adapta a tu nivel.",
+    "columns": [
+      {
+        "icon": "Code2",
+        "title": "Developers",
+        "description": "Para devs que quieren multiplicar su output sin cambiar de herramientas.",
+        "bullets": ["Integración con VS Code", "19 modos especializados", "Automatización de tareas repetitivas", "Code review automático"]
+      },
+      {
+        "icon": "GraduationCap",
+        "title": "Principiantes",
+        "description": "¿Recién empiezas con AI agents? Nuestra configuración es plug-and-play.",
+        "bullets": ["Instalación en 5 minutos", "Documentación en español", "Modos pre-configurados", "Comunidad activa"]
+      },
+      {
+        "icon": "Building2",
+        "title": "Enterprises",
+        "description": "Escala tu desarrollo con un enjambre coordinado que respeta tu presupuesto.",
+        "bullets": ["Circuit breakers anti-fallos", "Modelos locales y cloud", "Auditoría de seguridad", "Trazabilidad completa"]
+      }
+    ]
+  },
+  "pricing": {
+    "id": "pricing",
+    "title": "Gratis. Open Source. Para siempre.",
+    "subtitle": "Paga solo los tokens que consumes",
+    "description": "COALA-SwarmOPS es 100% open source. Pagas únicamente el costo de los modelos que elijas usar (API tokens). Si usas modelos locales como Qwen o Granite, el costo es CERO.",
+    "tiers": [
+      {
+        "name": "Modelos Locales",
+        "price": "$0",
+        "description": "Usa Qwen y Granite en tu propia máquina sin pagar un peso.",
+        "features": ["Ejecución local (T0)", "12GB VRAM recomendada", "Sin límite de requests", "100% privado"],
+        "cta": { "text": "Comenzar Gratis", "href": "#how-it-works", "variant": "primary" },
+        "highlighted": false
+      },
+      {
+        "name": "Modelos Cloud (T0.5–T3)",
+        "price": "Desde $0.14",
+        "description": "Escala a modelos más potentes cuando necesites razonamiento avanzado.",
+        "features": ["DeepSeek Flash ($0.14)", "DeepSeek Pro", "Kimi K2.5/K2.6", "Pago por uso real"],
+        "cta": { "text": "Sponsor en GitHub", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "secondary", "icon": "Heart" },
+        "highlighted": true
+      }
+    ],
+    "ctas": [
+      { "text": "Hazte Sponsor", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "primary", "icon": "Heart" }
+    ]
+  },
+  "community": {
+    "id": "community",
+    "title": "Únete al enjambre",
+    "subtitle": "Comunidad open source",
+    "description": "COALA-SwarmOPS es un proyecto vivo. Contribuye, reporta bugs, sugiere features. Esto lo construimos entre todos.",
+    "ctas": [
+      { "text": "GitHub (v2)", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2", "variant": "primary", "icon": "Github" },
+      { "text": "GitHub (v1)", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS", "variant": "outline", "icon": "Github" }
+    ]
+  },
+  "footer": {
+    "copyright": "© 2026 COALA-SwarmOPS — Oficina Digital CL. Todos los derechos reservados.",
+    "links": [
+      { "text": "GitHub", "href": "https://github.com/oficinadigitalCL" },
+      { "text": "Sponsors", "href": "https://github.com/sponsors/oficinadigitalCL" },
+      { "text": "Documentación", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2" }
+    ]
+  }
+}
