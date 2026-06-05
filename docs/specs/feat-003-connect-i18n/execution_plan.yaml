@@ -1,0 +1,527 @@
+spec_version: "6.7"
+feature_id: FEAT-003
+slug: feat-003-connect-i18n
+title: "Conectar Componentes al Sistema i18n — 9 secciones + TypewriterText dinámico"
+gate_status: ENRICH_APPROVED
+planning_started_at: "2026-06-04T22:41:00Z"
+planning_completed_at: "2026-06-04T22:49:00Z"
+planner: "fastforward-writer (T3 · Kimi K2.6)"
+depends_on:
+  - FEAT-002
+
+---
+# Dependency Graph
+# Phase 0 → Phase 1-4 (parallel JSON extensions) → Phase 5-13 (component refactors, pueden paralelizarse por grupos)
+# → Phase 14 (cross-language verification) → Phase 15 (build, test, merge)
+#
+# Phases 5-13 (component refactors) son independientes entre sí y pueden ejecutarse en paralelo.
+# Phase 14 (verificación) depende de que TODOS los componentes estén refactorizados.
+
+phases:
+  - phase: 0
+    name: "Branch & Environment Setup"
+    description: "Crear branch feat/feat-003-connect-i18n, verificar estado actual, leer design.md"
+    gate: PRE_BUILD_GATE
+    owner_tier: "T0 + T0.5 + T1"
+    task_range: "1–8"
+    tasks_total: 8
+    parallel_groups:
+      - group: "branch"
+        tasks: [1]
+        owner: senior
+        note: "Crear branch feat/feat-003-connect-i18n desde master"
+      - group: "verify-baseline"
+        tasks: [2, 3]
+        owner: qwen-fast-checker
+        note: "Verificar dev server y 4 idiomas existentes funcionan"
+      - group: "context-load"
+        tasks: [4, 5, 6, 7, 8]
+        owner: "qwen-fast-checker + flash-fast-coder"
+        note: "Leer design.md, verificar HeroSection/Footer hardcodeos, validar JSON keys"
+    gate_exit_criteria:
+      - "Branch creado y activo"
+      - "npm run dev funciona sin errores"
+      - "Los 4 idiomas (es/en/zh/zh-TW) existen en LanguageSwitcher"
+      - "Equipo conoce el estado baseline: 9 componentes con textos hardcodeados"
+    rollback: "Eliminar branch y volver a master"
+
+  - phase: 1
+    name: "Data Layer — Nuevas Claves en es.json"
+    description: "Agregar problem.comparison, pricing.popularBadge, pricing.freeMessage, community.repos, footer.madeWithLove a es.json"
+    gate: DATA_ES_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "9–16"
+    tasks_total: 8
+    parallel_groups:
+      - group: "problem-comparison"
+        tasks: [9, 10, 11, 12]
+        owner: flash-fast-coder
+        note: "Agregar comparison con staticTitle, swarmTitle, staticItems[4], swarmItems[4]"
+      - group: "pricing-community-footer"
+        tasks: [13, 14, 15]
+        owner: flash-fast-coder
+        note: "Agregar popularBadge, freeMessage, repos[2], madeWithLove"
+      - group: "validate"
+        tasks: [16]
+        owner: qwen-fast-checker
+        note: "Validar que es.json parsea correctamente tras las adiciones"
+    gate_exit_criteria:
+      - "es.json contiene problem.comparison con 2 títulos + 8 bullets"
+      - "es.json contiene pricing.popularBadge y pricing.freeMessage"
+      - "es.json contiene community.repos[2] con title/description/cta"
+      - "es.json contiene footer.madeWithLove"
+      - "JSON.parse válido sin errores"
+    rollback: "Revertir adiciones en es.json"
+
+  - phase: 2
+    name: "Data Layer — Nuevas Claves en en.json"
+    description: "Traducir las nuevas claves a inglés en en.json"
+    gate: DATA_EN_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "17–24"
+    tasks_total: 8
+    depends_on: [1]
+    parallel_groups:
+      - group: "en-translations"
+        tasks: [17, 18, 19, 20, 21, 22, 23]
+        owner: flash-fast-coder
+        note: "Traducir comparison, popularBadge, freeMessage, repos a EN"
+      - group: "validate"
+        tasks: [24]
+        owner: qwen-fast-checker
+        note: "Validar que en.json tiene mismas keys que es.json"
+    gate_exit_criteria:
+      - "en.json contiene todas las nuevas claves con textos en inglés"
+      - "Diff de keys: zero missing, zero extra vs es.json"
+    rollback: "Revertir adiciones en en.json"
+
+  - phase: 3
+    name: "Data Layer — Nuevas Claves en zh.json"
+    description: "Traducir las nuevas claves a chino simplificado en zh.json"
+    gate: DATA_ZH_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "25–32"
+    tasks_total: 8
+    depends_on: [1]
+    parallel_groups:
+      - group: "zh-translations"
+        tasks: [25, 26, 27, 28, 29, 30, 31]
+        owner: flash-fast-coder
+        note: "Traducir comparison, popularBadge, freeMessage, repos a ZH simplificado"
+      - group: "validate"
+        tasks: [32]
+        owner: qwen-fast-checker
+        note: "Validar que zh.json tiene mismas keys que es.json"
+    gate_exit_criteria:
+      - "zh.json contiene todas las nuevas claves con textos en chino simplificado"
+      - "Verificar caracteres: 静态 (no 靜態), 工作流 (no 工作流程)"
+      - "Diff de keys: zero missing, zero extra vs es.json"
+    rollback: "Revertir adiciones en zh.json"
+
+  - phase: 4
+    name: "Data Layer — Nuevas Claves en zh-TW.json"
+    description: "Traducir las nuevas claves a chino tradicional en zh-TW.json"
+    gate: DATA_ZHTW_GATE
+    owner_tier: "T0.5 + T0 + T2"
+    task_range: "33–40"
+    tasks_total: 8
+    depends_on: [1]
+    parallel_groups:
+      - group: "zhtw-translations"
+        tasks: [33, 34, 35, 36, 37, 38, 39]
+        owner: flash-fast-coder
+        note: "Traducir comparison, popularBadge, freeMessage, repos a ZH-TW tradicional"
+      - group: "validate"
+        tasks: [40]
+        owner: evidence-checker
+        note: "Validar diff estructural con es.json + verificar caracteres tradicionales"
+    gate_exit_criteria:
+      - "zh-TW.json contiene todas las nuevas claves con caracteres tradicionales"
+      - "Verificar: 靜態 (no 静态), 最受歡迎 (no 最受欢迎), 開源 (no 开源)"
+      - "Diff estructural: zero missing keys, zero extra keys"
+    rollback: "Corregir caracteres simplificados accidentales"
+
+  - phase: 5
+    name: "Component Refactor — HeroSection + TypewriterText"
+    description: "Conectar HeroSection a useLanguage + contentMap; eliminar TAGLINES hardcodeado; TypewriterText recibe content.tagline"
+    gate: HERO_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "41–52"
+    tasks_total: 12
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "hero-imports-state"
+        tasks: [41, 42, 43]
+        owner: flash-fast-coder
+        note: "Eliminar TAGLINES, agregar useLanguage import, agregar content hook"
+      - group: "hero-texts"
+        tasks: [44, 45, 46]
+        owner: flash-fast-coder
+        note: "Reemplazar title, tagline, description con content.hero.*"
+      - group: "hero-ctas"
+        tasks: [47, 48, 49, 50]
+        owner: flash-fast-coder
+        note: "Reemplazar 3 CTAs con content.ctas[n].text; mantener hrefs de JSON"
+      - group: "hero-verify"
+        tasks: [51, 52]
+        owner: qwen-fast-checker
+        note: "Verificar badge sin cambios, TypewriterText recibe content.tagline"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en HeroSection (excepto badge v2.0)"
+      - "TypewriterText recibe text={content.tagline}"
+      - "3 CTAs usan content.ctas[n].text y content.ctas[n].href"
+      - "TAGLINES array eliminado del archivo"
+      - "HeroSection renderiza sin errores en los 4 idiomas"
+    rollback: "Revertir HeroSection.tsx al estado baseline"
+
+  - phase: 6
+    name: "Component Refactor — ProblemSection"
+    description: "Conectar ProblemSection a useLanguage + contentMap; mover comparación Static/Swarm a JSON"
+    gate: PROBLEM_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "53–64"
+    tasks_total: 12
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "problem-imports"
+        tasks: [53, 54, 55, 56]
+        owner: flash-fast-coder
+        note: "Eliminar import es.json estático, agregar useLanguage + contentMap"
+      - group: "problem-data"
+        tasks: [57]
+        owner: flash-fast-coder
+        note: "Reemplazar problemContent por content en title, description, features"
+      - group: "problem-comparison"
+        tasks: [58, 59, 60, 61]
+        owner: flash-fast-coder
+        note: "Reemplazar Static/Swarm hardcodeado por content.comparison.*"
+      - group: "problem-verify"
+        tasks: [62, 63, 64]
+        owner: qwen-fast-checker
+        note: "Verificar iconMap, aria-label, render en 4 idiomas"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en ProblemSection"
+      - "Comparación Static vs Swarm usa content.comparison"
+      - "8 bullets (4+4) provienen de JSON"
+      - "iconMap funciona con features dinámicos"
+      - "Render correcto en ES/EN/ZH/ZH-TW"
+    rollback: "Revertir ProblemSection.tsx al estado baseline"
+
+  - phase: 7
+    name: "Component Refactor — SolutionSection"
+    description: "Conectar SolutionSection a useLanguage + contentMap (refactor simple: solo cambiar import)"
+    gate: SOLUTION_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "65–72"
+    tasks_total: 8
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "solution-refactor"
+        tasks: [65, 66, 67, 68, 69]
+        owner: flash-fast-coder
+        note: "Cambiar import estático por useLanguage + contentMap; reemplazar referencias"
+      - group: "solution-verify"
+        tasks: [70, 71, 72]
+        owner: qwen-fast-checker
+        note: "Verificar iconMap, 0 hardcodeos, render en 4 idiomas"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en SolutionSection"
+      - "0 imports estáticos de es.json"
+      - "Features (3 cards) renderizan desde content.features"
+      - "Render correcto en los 4 idiomas"
+    rollback: "Revertir SolutionSection.tsx"
+
+  - phase: 8
+    name: "Component Refactor — HowItWorksSection"
+    description: "Conectar HowItWorksSection a useLanguage + contentMap (refactor simple)"
+    gate: HOW_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "73–80"
+    tasks_total: 8
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "how-refactor"
+        tasks: [73, 74, 75, 76, 77]
+        owner: flash-fast-coder
+        note: "Cambiar import estático por useLanguage + contentMap"
+      - group: "how-verify"
+        tasks: [78, 79, 80]
+        owner: qwen-fast-checker
+        note: "Verificar iconMap (Download, FileText, Rocket), 0 hardcodeos, render 4 idiomas"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en HowItWorksSection"
+      - "3 steps renderizan desde content.steps"
+      - "StepConnector sigue funcional"
+      - "Render correcto en los 4 idiomas"
+    rollback: "Revertir HowItWorksSection.tsx"
+
+  - phase: 9
+    name: "Component Refactor — ModesShowcaseSection"
+    description: "Conectar ModesShowcaseSection a useLanguage + contentMap; reemplazar CTA hardcodeado"
+    gate: MODES_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "81–88"
+    tasks_total: 8
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "modes-refactor"
+        tasks: [81, 82, 83, 84, 85, 86]
+        owner: flash-fast-coder
+        note: "Cambiar import estático por useLanguage + contentMap; usar ctas[0].text para el botón"
+      - group: "modes-verify"
+        tasks: [87, 88]
+        owner: qwen-fast-checker
+        note: "Verificar FlipCards sin cambios, render 4 idiomas"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en ModesShowcaseSection"
+      - "Botón CTA usa content.ctas[0].text + modes.length dinámico"
+      - "FlipCards de modes.ts sin cambios"
+      - "Render correcto en los 4 idiomas"
+    rollback: "Revertir ModesShowcaseSection.tsx"
+
+  - phase: 10
+    name: "Component Refactor — WhoIsItForSection"
+    description: "Conectar WhoIsItForSection a useLanguage + contentMap (refactor simple)"
+    gate: WHO_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "89–96"
+    tasks_total: 8
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "who-refactor"
+        tasks: [89, 90, 91, 92, 93]
+        owner: flash-fast-coder
+        note: "Cambiar import estático por useLanguage + contentMap"
+      - group: "who-verify"
+        tasks: [94, 95, 96]
+        owner: qwen-fast-checker
+        note: "Verificar iconMap (Code2, GraduationCap, Building2), bullets, render 4 idiomas"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en WhoIsItForSection"
+      - "3 columnas con bullets renderizan desde content.columns"
+      - "Render correcto en los 4 idiomas"
+    rollback: "Revertir WhoIsItForSection.tsx"
+
+  - phase: 11
+    name: "Component Refactor — PricingSection"
+    description: "Conectar PricingSection a useLanguage + contentMap; eliminar hardcodeos de badge, freeMessage y CTA"
+    gate: PRICING_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "97–108"
+    tasks_total: 12
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "pricing-imports"
+        tasks: [97, 98, 99, 100]
+        owner: flash-fast-coder
+        note: "Eliminar import estático, agregar useLanguage + contentMap"
+      - group: "pricing-data"
+        tasks: [101]
+        owner: flash-fast-coder
+        note: "Reemplazar pricingContent por content en title, description, tiers"
+      - group: "pricing-hardcoded"
+        tasks: [102, 103, 104]
+        owner: flash-fast-coder
+        note: "Reemplazar 'Más popular', freeMessage, 'Hazte Sponsor' por content.*"
+      - group: "pricing-verify"
+        tasks: [105, 106, 107, 108]
+        owner: qwen-fast-checker
+        note: "Verificar precios, iconos condicionales, tier highlighted, render 4 idiomas"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en PricingSection"
+      - "Badge 'Más popular' usa content.popularBadge"
+      - "freeMessage usa content.freeMessage"
+      - "CTA inferior usa content.ctas[0].text"
+      - "Precios ($0, Desde $0.14) preservados del JSON"
+      - "Render correcto en los 4 idiomas"
+    rollback: "Revertir PricingSection.tsx"
+
+  - phase: 12
+    name: "Component Refactor — CommunitySection"
+    description: "Conectar CommunitySection a useLanguage + contentMap; reemplazar hardcodeos de repo titles, descriptions y CTAs"
+    gate: COMMUNITY_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "109–120"
+    tasks_total: 12
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "community-imports"
+        tasks: [109, 110, 111, 112]
+        owner: flash-fast-coder
+        note: "Eliminar import estático, agregar useLanguage + contentMap"
+      - group: "community-data"
+        tasks: [113]
+        owner: flash-fast-coder
+        note: "Reemplazar communityContent por content en title, description"
+      - group: "community-repos"
+        tasks: [114, 115, 116, 117, 118, 119]
+        owner: flash-fast-coder
+        note: "Reemplazar v2 title/desc/cta y v1 title/desc/cta por content.repos[0,1]"
+      - group: "community-verify"
+        tasks: [120]
+        owner: qwen-fast-checker
+        note: "Verificar render en 4 idiomas"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en CommunitySection"
+      - "2 repo cards usan content.repos[0] y content.repos[1]"
+      - "URLs (URL_V1, URL_V2) preservadas como constantes"
+      - "Render correcto en los 4 idiomas"
+    rollback: "Revertir CommunitySection.tsx"
+
+  - phase: 13
+    name: "Component Refactor — Footer"
+    description: "Conectar Footer a useLanguage + contentMap; agregar clave madeWithLove a los 4 JSON"
+    gate: FOOTER_GATE
+    owner_tier: "T0.5 + T0"
+    task_range: "121–128"
+    tasks_total: 8
+    depends_on: [1, 2, 3, 4]
+    parallel_groups:
+      - group: "footer-refactor"
+        tasks: [121, 122, 123, 124, 125]
+        owner: flash-fast-coder
+        note: "Agregar useLanguage + contentMap; reemplazar copyright, madeWithLove, links"
+      - group: "footer-json"
+        tasks: [126]
+        owner: flash-fast-coder
+        note: "Agregar footer.madeWithLove a los 4 JSON"
+      - group: "footer-verify"
+        tasks: [127, 128]
+        owner: qwen-fast-checker
+        note: "Verificar EXTERNAL_LINK_PROPS en links dinámicos, render 4 idiomas"
+    gate_exit_criteria:
+      - "0 strings hardcodeados en Footer"
+      - "Copyright usa content.copyright"
+      - "Links iteran sobre content.links"
+      - "madeWithLove existe en los 4 JSON"
+      - "Render correcto en los 4 idiomas"
+    rollback: "Revertir Footer.tsx y eliminar clave madeWithLove de JSONs"
+
+  - phase: 14
+    name: "Verificación Cross-Idioma & Regresión"
+    description: "Verificar los 9 componentes en los 4 idiomas; confirmar 0 hardcodeos restantes"
+    gate: CROSS_LANG_GATE
+    owner_tier: "T0 + T2"
+    task_range: "129–140"
+    tasks_total: 12
+    depends_on: [5, 6, 7, 8, 9, 10, 11, 12, 13]
+    parallel_groups:
+      - group: "hero-cross-lang"
+        tasks: [129, 130, 131, 132]
+        owner: qwen-fast-checker
+        note: "Verificar HeroSection en ES/EN/ZH/ZH-TW con TypewriterText funcional"
+      - group: "sections-cross-lang"
+        tasks: [133, 134, 135, 136]
+        owner: qwen-fast-checker
+        note: "Verificar Problem comparison, Pricing badge/freeMessage, Community repos, Footer"
+      - group: "zero-hardcode"
+        tasks: [137, 138, 139]
+        owner: evidence-checker
+        note: "Navegar ES→EN→ZH→ZH-TW→ES; verificar 0 imports es.json; verificar 0 strings ES"
+      - group: "type-check"
+        tasks: [140]
+        owner: qwen-fast-checker
+        note: "Verificar build sin warnings de TypeScript"
+    gate_exit_criteria:
+      - "Los 9 componentes renderizan correctamente en ES, EN, ZH, ZH-TW"
+      - "0 imports de '../../data/es.json' en componentes de sección"
+      - "0 strings hardcodeados en español en JSX de los 9 componentes"
+      - "TypeScript compila sin errores ni warnings"
+      - "FEAT-002 sin regresión: zh-TW funciona correctamente"
+    rollback: "Corregir componente específico que falla"
+
+  - phase: 15
+    name: "Build, Test & Merge"
+    description: "Build verification, bundle size check, tests existentes, npm audit, Lighthouse, merge"
+    gate: RELEASE_GATE
+    owner_tier: "T0.5 + T2 + T1"
+    task_range: "141–148"
+    tasks_total: 8
+    depends_on: [14]
+    parallel_groups:
+      - group: "build"
+        tasks: [141]
+        owner: flash-fast-coder
+        note: "npm run build sin errores"
+      - group: "verify-metrics"
+        tasks: [142, 145]
+        owner: evidence-checker
+        note: "Bundle size ≤+2KB, Lighthouse A11y ≥95, SEO ≥95 en 4 idiomas"
+      - group: "tests-security"
+        tasks: [143, 144]
+        owner: "test-engineer + security-auditor"
+        note: "Tests existentes pasan, npm audit sin nuevas vulnerabilidades"
+      - group: "regression-visual"
+        tasks: [146, 147]
+        owner: "evidence-checker + test-engineer"
+        note: "FEAT-002 sin regresión, verificación visual de 9 componentes en 4 idiomas"
+      - group: "merge"
+        tasks: [148]
+        owner: senior
+        note: "Merge feat/feat-003-connect-i18n → master con Conventional Commits"
+    gate_exit_criteria:
+      - "npm run build completa sin errores"
+      - "Bundle size increase ≤2KB"
+      - "Tests existentes pasan (useLanguage, LanguageSwitcher)"
+      - "npm audit: zero new critical/high vulnerabilities"
+      - "Lighthouse: A11y ≥95, SEO ≥95, Best Practices = 100 en los 4 idiomas"
+      - "FEAT-002 sin regresión"
+      - "Verificación visual: 9 componentes × 4 idiomas = 36 verificaciones OK"
+      - "PR mergeado a master con mensaje 'feat(i18n): connect all section components to contentMap'"
+
+# Risk Register
+risks:
+  - id: R01
+    description: "TypewriterText no se reinicia al cambiar idioma — flicker o texto mezclado"
+    mitigation: "useTypingEffect ya tiene reset() en cambio de text. Verificar con test unitario (Phase 5 task 52)"
+    owner: qwen-fast-checker
+    phase: 5
+
+  - id: R02
+    description: "Nuevas claves JSON faltantes en zh-TW.json — build falla por tipo Record<Language, typeof esContent>"
+    mitigation: "TypeScript fuerza exhaustividad; si falta una key, el build no compila. Validación estructural en Phase 4 task 40"
+    owner: evidence-checker
+    phase: 4
+
+  - id: R03
+    description: "Componente se rompe al cambiar idioma porque la estructura JSON es diferente entre idiomas"
+    mitigation: "Todos los JSON comparten la misma estructura (forzado por Record<Language, typeof esContent>). Validación cross-file en CI/CD"
+    owner: evidence-checker
+    phase: 14
+
+  - id: R04
+    description: "Regresión en animaciones Framer Motion — re-render por cambio de idioma interrumpe whileInView"
+    mitigation: "Framer Motion maneja re-renders sin reiniciar animaciones. SectionReveal y AnimatedCard no dependen del idioma"
+    owner: test-engineer
+    phase: 14
+
+  - id: R05
+    description: "Footer pierde el icono Heart en madeWithLove al mover a JSON"
+    mitigation: "El corazón se mantiene como componente <Heart>; solo el texto 'para la comunidad open source' va al JSON"
+    owner: flash-fast-coder
+    phase: 13
+
+  - id: R06
+    description: "HeroSection title 'COALA-SwarmOPS' con span cyan se rompe al usar content.title"
+    mitigation: "El nombre es propio y no se traduce. Se usa content.title para el texto pero se preserva el markup con <span> para el estilo"
+    owner: flash-fast-coder
+    phase: 5
+
+  - id: R07
+    description: "Cambios en 9 componentes simultáneos generan conflictos de merge"
+    mitigation: "Cada componente es independiente; las fases 5-13 pueden ejecutarse en paralelo sin conflictos porque modifican archivos distintos"
+    owner: senior
+    phase: 15
+
+  - id: R08
+    description: "Lighthouse audit con idioma ZH-TW podría reportar error de lang attribute"
+    mitigation: "document.documentElement.lang se configura correctamente en useLanguage.tsx (FEAT-002). Verificar en Phase 15 task 145"
+    owner: evidence-checker
+    phase: 15
+
+# Context Update Trigger
+context_update:
+  trigger: "After phase 15 GATE_PASS"
+  owner: context-guardian
+  file: "docs/swarm-context.md"
+  action: "Append FEAT-003 completion: 9 components connected to i18n, errors learned, patterns detected"

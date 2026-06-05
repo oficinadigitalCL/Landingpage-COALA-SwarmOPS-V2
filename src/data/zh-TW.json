@@ -30,7 +30,23 @@
       { "icon": "Zap", "title": "沒有協調", "description": "智慧體各自孤立運作，從不共享情境或結果。" },
       { "icon": "DollarSign", "title": "隱藏成本", "description": "每次切換智慧體都意味著從頭重建情境。" },
       { "icon": "Clock", "title": "時間流失", "description": "手動切換工具會打斷你的開發流程。" }
-    ]
+    ],
+    "comparison": {
+      "staticTitle": "傳統開發",
+      "swarmTitle": "COALA-SwarmOPS",
+      "staticItems": [
+        "每個任務一個代理，無協調",
+        "成本不可預測且持續增長",
+        "每個工具的學習曲線陡峭",
+        "執行結果不一致"
+      ],
+      "swarmItems": [
+        "多個代理像團隊一樣協作",
+        "比替代方案便宜高達95%",
+        "5分鐘安裝，零配置",
+        "確定性且可審計的結果"
+      ]
+    }
   },
   "solution": {
     "id": "solution",
@@ -120,7 +136,9 @@
     ],
     "ctas": [
       { "text": "成為贊助者", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "primary", "icon": "Heart" }
-    ]
+    ],
+    "popularBadge": "最受歡迎",
+    "freeMessage": "永久免費。無需信用卡。"
   },
   "community": {
     "id": "community",
@@ -130,6 +148,18 @@
     "ctas": [
       { "text": "COALA SwarmOPS v2", "href": "https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS-V2/", "variant": "primary", "icon": "Github" },
       { "text": "COALA SwarmOPS v1", "href": "https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS/#", "variant": "outline", "icon": "Github" }
+    ],
+    "repos": [
+      {
+        "title": "COALA-SwarmOPS v2",
+        "description": "框架的最新版本。自訂模式、MCP 伺服器和互動式進度條。",
+        "cta": "在 GitHub 上查看"
+      },
+      {
+        "title": "COALA-SwarmOPS v1",
+        "description": "開啟一切的原始版本。穩定、經過實戰考驗，社群仍在使用。",
+        "cta": "探索 v1"
+      }
     ]
   },
   "footer": {
@@ -138,6 +168,7 @@
       { "text": "GitHub", "href": "https://github.com/oficinadigitalCL" },
       { "text": "贊助者", "href": "https://github.com/sponsors/oficinadigitalCL" },
       { "text": "文件", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2" }
-    ]
+    ],
+    "madeWithLove": "為開源社群"
   }
 }

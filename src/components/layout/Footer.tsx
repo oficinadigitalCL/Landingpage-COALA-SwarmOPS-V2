@@ -1,7 +1,11 @@
 import { Github, Heart } from 'lucide-react';
 import { EXTERNAL_LINK_PROPS } from '../../lib/utils';
+import { useLanguage, contentMap } from '../../hooks/useLanguage';
 
 function Footer() {
+  const { language } = useLanguage();
+  const content = contentMap[language];
+
   return (
     <footer
       className="border-t border-white/5 bg-coala-darker py-12"
@@ -11,7 +15,7 @@ function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <p className="text-gray-400 text-sm">
-              © 2026 COALA-SwarmOPS — Oficina Digital CL
+              {content.footer.copyright}
             </p>
             <p className="text-gray-500 text-xs mt-1">
               Hecho con{' '}
@@ -20,7 +24,7 @@ function Footer() {
                 className="inline text-red-400"
                 aria-hidden="true"
               />{' '}
-              para la comunidad open source
+              {content.footer.madeWithLove}
             </p>
           </div>
           <div className="flex items-center gap-4">

@@ -1,7 +1,9 @@
 import { useRef, lazy, Suspense } from 'react';
-import { ArrowRight, Heart, Download } from 'lucide-react';
+import { ArrowRight, Heart, Download, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TypewriterText } from '../ui/TypewriterText';
+import { useLanguage } from '../../hooks/useLanguage';
+import { contentMap } from '../../hooks/useLanguage.tsx';
 import { useParticleSwarm } from '../../hooks/useParticleSwarm';
 
 const HeroThreeBackground = lazy(() =>
@@ -10,13 +12,6 @@ const HeroThreeBackground = lazy(() =>
   }))
 );
 import { cn } from '../../lib/utils';
-
-const TAGLINES = [
-  'Orquesta tu ecosistema de agentes IA',
-  'Ahorra plata en AI agents',
-  'Instala en 5 minutos',
-  'Configuración battle-tested',
-];
 
 const linkStyles =
   'relative inline-flex items-center justify-center rounded-lg font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-coala-cyan/50';
@@ -41,6 +36,16 @@ function HeroSection() {
     connectionRadius: 180,
     mouseRadius: 250,
   });
+
+  const { language } = useLanguage();
+  const content = contentMap[language];
+
+  const iconMap: Record<string, React.ReactNode> = {
+    Heart: <Heart size={20} />,
+    Download: <Download size={20} />,
+    BookOpen: <BookOpen size={20} />,
+    ArrowRight: <ArrowRight size={20} />,
+  };
 
   return (
     <section
@@ -78,14 +83,14 @@ function HeroSection() {
           </div>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
-            COALA-
+            {content.hero.title.replace('SwarmOPS', '')}
             <span className="text-coala-cyan">SwarmOPS</span>
           </h1>
 
           {/* Typewriter tagline */}
           <div className="text-xl sm:text-2xl text-gray-300 mb-10 h-10">
             <TypewriterText
-              text={TAGLINES[0]}
+              text={content.hero.tagline}
               speed={60}
               delay={2000}
               loop={true}
@@ -94,37 +99,27 @@ function HeroSection() {
           </div>
 
           <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-12">
-            Deja de pagar por agentes individuales. Coordínalos todos con nuestra configuración
-            battle-tested. 19 modos especializados que trabajan en ecosistema.
+            {content.hero.description}
           </p>
 
           {/* CTA buttons as styled anchor tags */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="https://github.com/sponsors/oficinadigitalCL"
-              className={cn(linkStyles, variants.primary)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Heart size={20} />
-              Sponsor en GitHub
-            </a>
-            <a
-              href="https://github.com/Aquilesnake/COALA-SwarmOps/blob/main/docs/INSTALL.md"
-              className={cn(linkStyles, variants.secondary)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Download size={20} />
-              Instalar Ahora
-            </a>
-            <a
-              href="#modes"
-              className={cn(linkStyles, variants.outline)}
-            >
-              Ver Modos
-              <ArrowRight size={20} />
-            </a>
+            {content.hero.ctas.map((cta, i) => {
+              const isExternal = cta.href.startsWith('http');
+              const iconEl = iconMap[cta.icon] || null;
+              return (
+                <a
+                  key={i}
+                  href={cta.href}
+                  className={cn(linkStyles, variants[cta.variant as keyof typeof variants])}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                >
+                  {iconEl}
+                  {cta.text}
+                </a>
+              );
+            })}
           </div>
         </motion.div>
       </div>

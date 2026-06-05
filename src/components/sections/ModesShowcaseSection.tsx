@@ -1,9 +1,7 @@
 import { SectionReveal } from '../ui/SectionReveal';
 import { FlipCard } from '../ui/FlipCard';
 import { modes } from '../../data/modes';
-import content from '../../data/es.json';
-
-const modesContent = content.modesShowcase;
+import { useLanguage, contentMap } from '../../hooks/useLanguage';
 
 const tierColors: Record<string, string> = {
   T0: 'bg-green-500/20 text-green-400 border-green-500/30',
@@ -16,6 +14,9 @@ const tierColors: Record<string, string> = {
 const FEATURED_COUNT = 6;
 
 function ModesShowcaseSection() {
+  const { language } = useLanguage();
+  const content = contentMap[language];
+  const modesContent = content.modesShowcase;
   const displayedModes = modes.slice(0, FEATURED_COUNT);
 
   return (
@@ -84,7 +85,7 @@ function ModesShowcaseSection() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-lg border-2 border-coala-cyan text-coala-cyan font-semibold hover:bg-coala-cyan/10 transition-all duration-300"
             >
-              Explorar Todos los Modos ({modes.length})
+              {content.hero.ctas[0].text} ({modes.length})
             </a>
           </div>
         </SectionReveal>
