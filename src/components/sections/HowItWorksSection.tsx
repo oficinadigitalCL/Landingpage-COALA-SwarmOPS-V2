@@ -2,9 +2,7 @@ import { Download, FileText, Rocket } from 'lucide-react';
 import { SectionReveal } from '../ui/SectionReveal';
 import { StepConnector } from '../ui/StepConnector';
 import { AnimatedCard } from '../ui/AnimatedCard';
-import content from '../../data/es.json';
-
-const howItWorksContent = content.howItWorks;
+import { useLanguage, contentMap } from '../../hooks/useLanguage';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Download,
@@ -13,6 +11,10 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
 };
 
 function HowItWorksSection() {
+  const { language } = useLanguage();
+  const content = contentMap[language];
+  const howItWorksContent = content.howItWorks;
+
   return (
     <section
       id="how-it-works"

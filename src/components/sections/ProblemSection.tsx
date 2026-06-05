@@ -7,9 +7,8 @@ import {
 } from 'lucide-react';
 import { SectionReveal } from '../ui/SectionReveal';
 import { AnimatedCard } from '../ui/AnimatedCard';
-import content from '../../data/es.json';
+import { useLanguage, contentMap } from '../../hooks/useLanguage';
 
-const problemContent = content.problem;
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Zap,
   DollarSign,
@@ -17,6 +16,10 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
 };
 
 function ProblemSection() {
+  const { language } = useLanguage();
+  const content = contentMap[language];
+  const problemContent = content.problem;
+
   return (
     <section
       id="problem"
@@ -56,59 +59,39 @@ function ProblemSection() {
         {/* Visual comparison: Static vs Swarm */}
         <SectionReveal delay={0.3}>
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Static Workflow */}
+            {/* Static/Traditional */}
             <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-8">
               <div className="flex items-center gap-3 mb-6">
                 <XCircle size={28} className="text-red-400" />
                 <h3 className="text-xl font-semibold text-red-300">
-                  Static Workflow
+                  {problemContent.comparison.staticTitle}
                 </h3>
               </div>
               <ul className="space-y-3 text-gray-400">
-                <li className="flex items-start gap-2">
-                  <XCircle size={18} className="mt-0.5 shrink-0 text-red-400" />
-                  <span>Un solo agente a la vez</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <XCircle size={18} className="mt-0.5 shrink-0 text-red-400" />
-                  <span>Cambio de contexto manual y costoso</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <XCircle size={18} className="mt-0.5 shrink-0 text-red-400" />
-                  <span>Sin memoria compartida entre tareas</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <XCircle size={18} className="mt-0.5 shrink-0 text-red-400" />
-                  <span>Propenso a errores de configuración</span>
-                </li>
+                {problemContent.comparison.staticItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <XCircle size={18} className="mt-0.5 shrink-0 text-red-400" />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Swarm Workflow */}
+            {/* Swarm/COALA-SwarmOPS */}
             <div className="rounded-xl border border-coala-cyan/20 bg-coala-cyan/5 p-8">
               <div className="flex items-center gap-3 mb-6">
                 <CheckCircle size={28} className="text-coala-cyan" />
                 <h3 className="text-xl font-semibold text-coala-cyan">
-                  Swarm Workflow
+                  {problemContent.comparison.swarmTitle}
                 </h3>
               </div>
               <ul className="space-y-3 text-gray-400">
-                <li className="flex items-start gap-2">
-                  <CheckCircle size={18} className="mt-0.5 shrink-0 text-coala-cyan" />
-                  <span>Múltiples agentes coordinados</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle size={18} className="mt-0.5 shrink-0 text-coala-cyan" />
-                  <span>Contexto compartido automáticamente</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle size={18} className="mt-0.5 shrink-0 text-coala-cyan" />
-                  <span>Memoria de trabajo entre modos</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle size={18} className="mt-0.5 shrink-0 text-coala-cyan" />
-                  <span>Configuración battle-tested incluida</span>
-                </li>
+                {problemContent.comparison.swarmItems.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <CheckCircle size={18} className="mt-0.5 shrink-0 text-coala-cyan" />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

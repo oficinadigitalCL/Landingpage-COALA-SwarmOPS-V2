@@ -1,9 +1,7 @@
 import { Code2, GraduationCap, Building2 } from 'lucide-react';
 import { SectionReveal } from '../ui/SectionReveal';
 import { AnimatedCard } from '../ui/AnimatedCard';
-import content from '../../data/es.json';
-
-const whoContent = content.whoIsItFor;
+import { useLanguage, contentMap } from '../../hooks/useLanguage';
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   Code2,
@@ -12,6 +10,10 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
 };
 
 function WhoIsItForSection() {
+  const { language } = useLanguage();
+  const content = contentMap[language];
+  const whoContent = content.whoIsItFor;
+
   return (
     <section
       id="who-is-it-for"

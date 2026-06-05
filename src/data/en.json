@@ -30,7 +30,23 @@
       { "icon": "Zap", "title": "No coordination", "description": "Agents work in isolation, never sharing context or results." },
       { "icon": "DollarSign", "title": "Hidden costs", "description": "Every agent switch means rebuilding context from scratch." },
       { "icon": "Clock", "title": "Lost time", "description": "Manually switching between tools breaks your development flow." }
-    ]
+    ],
+    "comparison": {
+      "staticTitle": "Traditional Development",
+      "swarmTitle": "COALA-SwarmOPS",
+      "staticItems": [
+        "One agent per task, no coordination",
+        "Unpredictable and growing costs",
+        "Steep learning curve for each tool",
+        "Inconsistent results between runs"
+      ],
+      "swarmItems": [
+        "Multiple agents collaborating as a team",
+        "Up to 95% cheaper than alternatives",
+        "Install in 5 minutes, zero configuration",
+        "Deterministic and auditable results"
+      ]
+    }
   },
   "solution": {
     "id": "solution",
@@ -120,7 +136,9 @@
     ],
     "ctas": [
       { "text": "Become a Sponsor", "href": "https://github.com/sponsors/oficinadigitalCL", "variant": "primary", "icon": "Heart" }
-    ]
+    ],
+    "popularBadge": "Most Popular",
+    "freeMessage": "Free forever. No credit card required."
   },
   "community": {
     "id": "community",
@@ -130,6 +148,18 @@
     "ctas": [
       { "text": "COALA SwarmOPS v2", "href": "https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS-V2/", "variant": "primary", "icon": "Github" },
       { "text": "COALA SwarmOPS v1", "href": "https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS/#", "variant": "outline", "icon": "Github" }
+    ],
+    "repos": [
+      {
+        "title": "COALA-SwarmOPS v2",
+        "description": "The latest version of the framework. Custom modes, MCP servers, and interactive progress bar.",
+        "cta": "View on GitHub"
+      },
+      {
+        "title": "COALA-SwarmOPS v1",
+        "description": "The original version that started it all. Stable, battle-tested, and still used by the community.",
+        "cta": "Explore v1"
+      }
     ]
   },
   "footer": {
@@ -138,6 +168,7 @@
       { "text": "GitHub", "href": "https://github.com/oficinadigitalCL" },
       { "text": "Sponsors", "href": "https://github.com/sponsors/oficinadigitalCL" },
       { "text": "Documentation", "href": "https://github.com/oficinadigitalCL/Landingpage-COALA-SwarmOPS-V2" }
-    ]
+    ],
+    "madeWithLove": "for the open source community"
   }
 }

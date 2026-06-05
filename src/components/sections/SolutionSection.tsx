@@ -1,9 +1,8 @@
 import { GitBranch, Shield, Network } from 'lucide-react';
 import { SectionReveal } from '../ui/SectionReveal';
 import { AnimatedCard } from '../ui/AnimatedCard';
-import content from '../../data/es.json';
+import { useLanguage, contentMap } from '../../hooks/useLanguage';
 
-const solutionContent = content.solution;
 
 const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   GitBranch,
@@ -12,6 +11,10 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
 };
 
 function SolutionSection() {
+  const { language } = useLanguage();
+  const content = contentMap[language];
+  const solutionContent = content.solution;
+
   return (
     <section
       id="solution"

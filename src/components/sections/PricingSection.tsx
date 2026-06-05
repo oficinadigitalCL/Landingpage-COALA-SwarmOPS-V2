@@ -1,11 +1,13 @@
 import { Heart, Check } from 'lucide-react';
 import { SectionReveal } from '../ui/SectionReveal';
 import { AnimatedCard } from '../ui/AnimatedCard';
-import content from '../../data/es.json';
-
-const pricingContent = content.pricing;
+import { useLanguage, contentMap } from '../../hooks/useLanguage';
 
 function PricingSection() {
+  const { language } = useLanguage();
+  const content = contentMap[language];
+  const pricingContent = content.pricing;
+
   return (
     <section
       id="pricing"
@@ -32,7 +34,7 @@ function PricingSection() {
               >
                 {tier.highlighted && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-coala-purple text-white text-xs font-semibold">
-                    Más popular
+                    {pricingContent.popularBadge}
                   </div>
                 )}
                 <div className="mb-6">
@@ -72,14 +74,14 @@ function PricingSection() {
         <SectionReveal delay={0.3}>
           <div className="text-center">
             <p className="text-gray-500 text-sm mb-4">
-              COALA-SwarmOPS es 100% open source. <strong className="text-coala-cyan">Free to install.</strong> Paga solo los tokens que consumas.
+              {pricingContent.freeMessage}
             </p>
             <a
               href="https://github.com/sponsors/oficinadigitalCL"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-coala-cyan text-black font-bold hover:shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-all duration-300"
             >
               <Heart size={20} />
-              Hazte Sponsor
+              {content.hero.ctas[0].text}
             </a>
           </div>
         </SectionReveal>

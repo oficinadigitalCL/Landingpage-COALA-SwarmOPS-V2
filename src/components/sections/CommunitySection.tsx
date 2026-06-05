@@ -1,14 +1,16 @@
 import { Github, Star, GitFork } from 'lucide-react';
 import { SectionReveal } from '../ui/SectionReveal';
 import { AnimatedCard } from '../ui/AnimatedCard';
-import content from '../../data/es.json';
-
-const communityContent = content.community;
+import { useLanguage, contentMap } from '../../hooks/useLanguage';
 
 const URL_V1 = 'https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS/#';
 const URL_V2 = 'https://oficinadigitalcl.github.io/Landingpage-COALA-SwarmOPS-V2/';
 
 function CommunitySection() {
+  const { language } = useLanguage();
+  const content = contentMap[language];
+  const communityContent = content.community;
+
   return (
     <section
       id="community"
@@ -31,9 +33,9 @@ function CommunitySection() {
           <SectionReveal delay={0.1}>
             <AnimatedCard glowColor="cyan" className="text-center h-full flex flex-col items-center justify-center">
               <Github size={48} className="text-white mb-4" />
-              <h3 className="text-xl font-bold text-white mb-2">COALA-SwarmOPS v2</h3>
+              <h3 className="text-xl font-bold text-white mb-2">{communityContent.repos[0].title}</h3>
               <p className="text-gray-400 text-sm mb-6">
-                Versión actual con swarm 6.7, circuit breakers y CoALA
+                {communityContent.repos[0].description}
               </p>
               {/* Badges */}
               <div className="flex items-center justify-center gap-4 mb-6">
@@ -53,7 +55,7 @@ function CommunitySection() {
                 rel="noopener noreferrer"
               >
                 <Github size={20} />
-                GitHub (v2)
+                {communityContent.repos[0].cta}
               </a>
             </AnimatedCard>
           </SectionReveal>
@@ -62,9 +64,9 @@ function CommunitySection() {
           <SectionReveal delay={0.2}>
             <AnimatedCard glowColor="purple" className="text-center h-full flex flex-col items-center justify-center">
               <Github size={48} className="text-white mb-4" />
-              <h3 className="text-xl font-bold text-white mb-2">COALA-SwarmOPS v1</h3>
+              <h3 className="text-xl font-bold text-white mb-2">{communityContent.repos[1].title}</h3>
               <p className="text-gray-400 text-sm mb-6">
-                Versión original — el concepto que empezó todo
+                {communityContent.repos[1].description}
               </p>
               {/* Badges */}
               <div className="flex items-center justify-center gap-4 mb-6">
@@ -84,7 +86,7 @@ function CommunitySection() {
                 rel="noopener noreferrer"
               >
                 <Github size={20} />
-                GitHub (v1)
+                {communityContent.repos[1].cta}
               </a>
             </AnimatedCard>
           </SectionReveal>
